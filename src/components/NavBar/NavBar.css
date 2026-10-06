@@ -116,7 +116,8 @@
 /* --- Menú hamburguesa: etiquetas y botón ocultos en escritorio --- */
 .menu-toggle,
 .icon-btn__label,
-.navbar-links-mobile {
+.navbar-links-mobile,
+.navbar-page {
   display: none;
 }
 
@@ -167,18 +168,55 @@
   }
 }
 
-/* --- ≤768px: el logo pasa al pie de página y los links ocupan el espacio --- */
+/* --- ≤768px: el logo pasa al pie de página --- */
 @media (max-width: 768px) {
   .navbar-logo {
     display: none;
   }
+}
 
+/* --- 641px a 768px: links centrados, con la hamburguesa a la derecha --- */
+@media (min-width: 641px) and (max-width: 768px) {
+  /* Tres columnas: un hueco del ancho de la hamburguesa, los links y la hamburguesa.
+     Así los links quedan centrados en la barra y no pegados a la izquierda. */
   .navbar-container {
-    gap: 16px;
+    display: grid;
+    grid-template-columns: 44px 1fr 44px;
+    align-items: center;
+    column-gap: 8px;
   }
 
-  .navbar-links {
-    gap: 20px;
+  .navbar-container::before {
+    content: '';
+  }
+
+  .navbar-container > .navbar-links {
+    justify-self: center;
+    gap: 4px;
+  }
+
+  .navbar-container > .navbar-links .nav-item {
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 14px;
+  }
+
+  .navbar-container > .navbar-links .nav-item:hover {
+    background-color: var(--hover-bg);
+  }
+
+  /* La página actual se marca con una píldora en vez del subrayado */
+  .navbar-container > .navbar-links .nav-item.active {
+    background-color: var(--hover-bg);
+    color: var(--accent-color);
+  }
+
+  .navbar-container > .navbar-links .nav-item.active::after {
+    display: none;
+  }
+
+  .menu-toggle {
+    justify-self: end;
   }
 }
 
@@ -186,6 +224,14 @@
 @media (max-width: 640px) {
   .navbar-container > .navbar-links {
     display: none;
+  }
+
+  /* Con los links dentro del menú, a la izquierda se muestra en qué página estás */
+  .navbar-page {
+    display: block;
+    color: var(--text-primary);
+    font-size: 17px;
+    font-weight: 600;
   }
 
   .menu-toggle {

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Moon, Sun, Volume2, VolumeX, Menu, X } from 'lucide-react';
 import './NavBar.css';
 
@@ -25,6 +25,9 @@ const NAV_ITEMS = [
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef(null);
+  const { pathname } = useLocation();
+  // Nombre de la página actual (se muestra en pantallas muy angostas)
+  const currentPage = NAV_ITEMS.find((item) => item.to === pathname)?.label;
 
   // Cierra el menú con Escape o al hacer clic fuera de la barra
   useEffect(() => {
@@ -98,6 +101,13 @@ function NavBar() {
             <Logo />
           </NavLink>
         </div>
+
+        {/* Página actual: solo se ve en pantallas muy angostas, donde no hay logo ni links */}
+        {currentPage && (
+          <span className="navbar-page" aria-hidden="true">
+            {currentPage}
+          </span>
+        )}
 
         {/* Navegación principal (en pantallas muy angostas pasa al menú hamburguesa) */}
         {renderLinks('navbar-links')}
