@@ -299,8 +299,9 @@
   object-fit: contain; /* CAMBIO CLAVE: Hace que la caricatura entera quepa dentro del círculo */
   object-position: center;
 }
-/* --- Caricatura empujando (oculta por defecto) --- */
-.hero-push {
+/* --- Caricatura empujando y caricatura pensando (ocultas por defecto) --- */
+.hero-push,
+.hero-thinking {
   display: none;
 }
 
@@ -360,22 +361,92 @@
     height: 280px;
   }
 
-  /* Botones y contacto apilados, mismo ancho y texto alineado a la izquierda */
+  /* Los botones y el contacto pasan a los globos de la caricatura pensando */
   .hero-ctas,
   .hero-social {
-    flex-direction: column;
-    align-items: stretch;
+    display: none;
+  }
+
+  .image-placeholder {
+    display: none;
+  }
+
+  .hero-visual {
+    padding-bottom: 24px;
+  }
+
+  /* La imagen ocupa todo el ancho de la pantalla (hasta 640px) para que los globos
+     sean lo más grandes posibles. `cqw` = 1% del ancho de este contenedor: el texto
+     de los globos crece y se achica junto con la imagen. */
+  .hero-thinking {
+    display: block;
+    position: relative;
+    container-type: inline-size;
+    width: 100vw;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  .hero-thinking img {
+    display: block;
     width: 100%;
-    max-width: 420px;
-    text-align: left;
+    height: auto;
   }
 
-  .hero-ctas {
-    gap: 14px;
-    margin-top: 1rem;
+  .bubble {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0 1.2cqw;
+    border-radius: 4.2cqw;
+    color: #1e293b;
+    font-size: clamp(10px, 3cqw, 17px);
+    font-weight: 600;
+    line-height: 1.15;
+    text-align: center;
+    text-decoration: none;
+    /* Las palabras no se cortan: si no entran, se achica la letra, nunca se parte "habilidades" */
+    overflow-wrap: normal;
+    hyphens: none;
+    /* `translate` es para la flotación y `transform` para el hover: así no se pisan */
+    animation: bubble-float 4.5s ease-in-out infinite;
+    transition: transform 0.2s ease, filter 0.2s ease;
   }
 
-  .cta {
-    justify-content: space-between;
+  .bubble:hover,
+  .bubble:focus-visible {
+    transform: translateY(-3px) scale(1.05);
+    filter: drop-shadow(0 6px 10px rgba(15, 23, 42, 0.28));
+  }
+
+  .bubble:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
+  }
+
+  /* El botón principal se destaca por color y peso, no por tamaño */
+  .bubble--primary {
+    color: #035a8a;
+    font-weight: 700;
+  }
+
+  /* Posición y tamaño de cada globo, en % de la imagen (medidos sobre el dibujo) */
+  .bubble--tl { left: 17.7%; top: 4.4%;  width: 22.9%; height: 25.1%; animation-delay: 0s; }
+  .bubble--tr { left: 59.5%; top: 3.9%;  width: 22.8%; height: 25%;   animation-delay: -1.2s; }
+  .bubble--ml { left: 5%;    top: 36.7%; width: 23.4%; height: 25.8%; animation-delay: -2.4s; }
+  .bubble--mr { left: 71.6%; top: 36.7%; width: 23.3%; height: 25.8%; animation-delay: -3.4s; }
+}
+
+@keyframes bubble-float {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble {
+    animation: none;
+    transition: none;
   }
 }

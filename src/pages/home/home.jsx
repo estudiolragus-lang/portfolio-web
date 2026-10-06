@@ -4,6 +4,7 @@ import './home.css';
 import pickSound from '../../assets/sounds/pick.mp3';
 import miCaricatura from '../../assets/images/miCaricatura.webp';
 import miCaricaturaEmpujando from '../../assets/images/miCaricaturaEmpujando.webp';
+import miCaricaturaPensamiento from '../../assets/images/miCaricaturaPensamiento.webp';
 import { useAudio } from '../../context/useAudio.js';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { projects } from '../../data/projects';
@@ -93,7 +94,7 @@ function Home() {
 
       {/* Columna Derecha: Elemento Visual */}
       <div className="hero-visual">
-        {/* Escritorio y móvil: caricatura sentada dentro del círculo */}
+        {/* Más de 768px: caricatura sentada dentro del círculo */}
         <div className="image-placeholder">
           <img src={miCaricatura} alt="Caricatura 3D de Agustín" />
         </div>
@@ -106,6 +107,36 @@ function Home() {
           aria-hidden="true"
           loading="lazy"
         />
+
+        {/* 768px o menos: la caricatura pensando, con los cuatro enlaces dentro de los globos.
+            Los globos vienen dibujados en la imagen (vacíos); los textos son enlaces reales encima. */}
+        <div className="hero-thinking">
+          <img
+            src={miCaricaturaPensamiento}
+            alt="Caricatura de Agustín sentado, pensando"
+            width="1080"
+            height="720"
+            loading="lazy"
+          />
+          <a href="/projects" className="bubble bubble--tl bubble--primary" onClick={(e) => goTo(e, '/projects')}>
+            Ver mis proyectos
+          </a>
+          <a href="/skills" className="bubble bubble--tr" onClick={(e) => goTo(e, '/skills')}>
+            Mis habilidades
+          </a>
+          <a
+            href={contact.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            className="bubble bubble--ml"
+            onClick={() => playSound(pickSound)}
+          >
+            LinkedIn
+          </a>
+          <a href={`mailto:${contact.email}`} className="bubble bubble--mr" onClick={() => playSound(pickSound)}>
+            Email
+          </a>
+        </div>
       </div>
 
     </section>
