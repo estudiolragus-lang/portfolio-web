@@ -34,16 +34,19 @@ export const projects = [
   {
     id: 'automatizacion-playwright',
     category: 'QA Automation',
-    status: 'En proceso',
+    status: 'Publicado',
     title: 'Pruebas Automatizadas con Playwright',
     summary:
-      'Suite de pruebas end-to-end que automatiza los flujos críticos de una aplicación web.',
+      'Suite de pruebas end-to-end sobre una tienda online de práctica: 28 casos de prueba, 5 bugs reportados y ejecución automática en GitHub Actions.',
     did: [
-      'Diseño casos de prueba a partir de los flujos principales del usuario.',
-      'Los estoy automatizando con Playwright y JavaScript.',
-      'Organizo el código con Page Object Model para que sea fácil de mantener.',
+      'Diseñé 28 casos de prueba de login, catálogo, carrito y checkout, con su plan de pruebas.',
+      'Los automaticé con Playwright y JavaScript, usando Page Object Model y fixtures.',
+      'Encontré y reporté 5 bugs, con pasos para reproducir, evidencia y un test que documenta cada uno.',
+      'Configuré GitHub Actions para correr toda la suite automáticamente.',
     ],
-    stack: ['Playwright', 'JavaScript', 'Page Object Model', 'E2E'],
-    links: [{ label: 'Ver repositorio', url: null }],
+    stack: ['Playwright', 'JavaScript', 'Page Object Model', 'GitHub Actions'],
+    links: [
+      { label: 'Ver repositorio', url: 'https://github.com/estudiolragus-lang/playwright-qa-automation' },
+    ],
   },
 ];
