@@ -51,16 +51,8 @@ function NavBar() {
   };
 
   const handleSoundToggle = () => {
-    // Reproducimos el efecto correspondiente ANTES o DESPUÉS de alternar el estado
-    if (soundEnabled) {
-      // Si estaba prendido, va a pasar a apagado -> reproducimos sonido de off
-      const audio = new Audio(sonidoOffSound);
-      audio.play().catch((err) => console.log('Error de audio:', err));
-    } else {
-      // Si estaba apagado, va a pasar a prendido -> reproducimos sonido de on
-      const audio = new Audio(sonidoOnSound);
-      audio.play().catch((err) => console.log('Error de audio:', err));
-    }
+    // Suena el efecto del estado al que se pasa. `true` fuerza el sonido aunque esté silenciado.
+    playGlobalSound(soundEnabled ? sonidoOffSound : sonidoOnSound, 0.4, true);
 
     // Cambiamos el estado globalmente para toda la app
     toggleSound();

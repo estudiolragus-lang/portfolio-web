@@ -98,3 +98,9 @@ body {
   font-family: 'Poppins', sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* Sin demora al tocar en el celular (evita la espera del doble toque para zoom) */
+a,
+button {
+  touch-action: manipulation;
+}
