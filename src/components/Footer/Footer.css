@@ -1,7 +1,7 @@
-/* Solo visible en pantallas de hasta 768px; en escritorio el logo está en la barra superior */
+/* Pie de página: logo a la izquierda y derechos a la derecha. En celular, el logo de la barra superior se oculta y queda acá. */
 .footer {
-  display: none;
-  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 12px;
   padding: 40px 5% 32px;
