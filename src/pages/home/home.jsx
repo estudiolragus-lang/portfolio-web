@@ -11,6 +11,53 @@ import { projects } from '../../data/projects';
 import { contact, shortUrl } from '../../data/contact';
 import { LinkedinIcon } from '../../components/BrandIcons/BrandIcons.jsx';
 
+// Los cuatro globos de la caricatura pensando. `tip` es el tooltip que explica adónde lleva cada uno.
+const BUBBLES = [
+  {
+    id: 'projects',
+    pos: 'tl',
+    label: 'Ver mis proyectos',
+    href: '/projects',
+    internal: true,
+    primary: true,
+    tip: {
+      title: 'Mis proyectos',
+      text: `Los ${projects.length} proyectos que construí y probé, con lo que hice en cada uno.`,
+    },
+  },
+  {
+    id: 'skills',
+    pos: 'tr',
+    label: 'Mis habilidades',
+    href: '/skills',
+    internal: true,
+    tip: {
+      title: 'Mis habilidades',
+      text: 'Testing manual, automatización y el desarrollo web que me sirve de base.',
+    },
+  },
+  {
+    id: 'linkedin',
+    pos: 'ml',
+    label: 'LinkedIn',
+    href: contact.linkedin,
+    tip: {
+      title: 'Agustín García en LinkedIn',
+      text: 'Mi perfil profesional. Se abre en una pestaña nueva.',
+    },
+  },
+  {
+    id: 'email',
+    pos: 'mr',
+    label: 'Email',
+    href: `mailto:${contact.email}`,
+    tip: {
+      title: 'Escribime',
+      text: `${contact.email}. Se abre tu aplicación de correo.`,
+    },
+  },
+];
+
 function Home() {
   useDocumentTitle('');
   const { playSound } = useAudio();
@@ -118,24 +165,24 @@ function Home() {
             height="720"
             loading="lazy"
           />
-          <a href="/projects" className="bubble bubble--tl bubble--primary" onClick={(e) => goTo(e, '/projects')}>
-            Ver mis proyectos
-          </a>
-          <a href="/skills" className="bubble bubble--tr" onClick={(e) => goTo(e, '/skills')}>
-            Mis habilidades
-          </a>
-          <a
-            href={contact.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            className="bubble bubble--ml"
-            onClick={() => playSound(pickSound)}
-          >
-            LinkedIn
-          </a>
-          <a href={`mailto:${contact.email}`} className="bubble bubble--mr" onClick={() => playSound(pickSound)}>
-            Email
-          </a>
+          {BUBBLES.map(({ id, pos, label, href, internal, primary, tip }) => (
+            <a
+              key={id}
+              href={href}
+              className={`bubble bubble--${pos}${primary ? ' bubble--primary' : ''}`}
+              aria-describedby={`tip-${id}`}
+              {...(internal ? {} : { target: href.startsWith('http') ? '_blank' : undefined, rel: 'noreferrer' })}
+              onClick={internal ? (e) => goTo(e, href) : () => playSound(pickSound)}
+            >
+              {label}
+              {/* Tooltip: aparece con el mouse o el teclado. Está oculto para lectores
+                  de pantalla porque ya se anuncia con aria-describedby. */}
+              <span id={`tip-${id}`} className="bubble__tip" role="tooltip" aria-hidden="true">
+                <strong>{tip.title}</strong>
+                {tip.text}
+              </span>
+            </a>
+          ))}
         </div>
       </div>
 

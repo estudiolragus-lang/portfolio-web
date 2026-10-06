@@ -432,6 +432,120 @@
     font-weight: 700;
   }
 
+  /* --- Tooltip de cada globo: explica adónde lleva --- */
+  .bubble:hover,
+  .bubble:focus-visible {
+    z-index: 5;
+  }
+
+  .bubble__tip {
+    position: absolute;
+    z-index: 6;
+    width: max-content;
+    max-width: min(210px, 62vw);
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: #0f172a;
+    color: #e2e8f0;
+    font-size: 12.5px;
+    font-weight: 500;
+    line-height: 1.45;
+    text-align: left;
+    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.45);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.18s ease, translate 0.18s ease, visibility 0s linear 0.18s;
+  }
+
+  .bubble__tip strong {
+    display: block;
+    margin-bottom: 2px;
+    color: #7dd3fc;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* Flechita que apunta al globo */
+  .bubble__tip::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    transform: rotate(45deg);
+  }
+
+  /* Los globos de arriba muestran el tooltip arriba; los del medio, abajo.
+     Los de la izquierda lo alinean a su borde izquierdo y los de la derecha, al derecho,
+     así nunca se sale de la pantalla. */
+  .bubble--tl .bubble__tip,
+  .bubble--tr .bubble__tip {
+    bottom: calc(100% + 12px);
+    translate: 0 6px;
+  }
+
+  .bubble--ml .bubble__tip,
+  .bubble--mr .bubble__tip {
+    top: calc(100% + 12px);
+    translate: 0 -6px;
+  }
+
+  .bubble--tl .bubble__tip,
+  .bubble--ml .bubble__tip {
+    left: 0;
+  }
+
+  .bubble--tr .bubble__tip,
+  .bubble--mr .bubble__tip {
+    right: 0;
+  }
+
+  .bubble--tl .bubble__tip::after,
+  .bubble--tr .bubble__tip::after {
+    bottom: -6px;
+    border-top: 0;
+    border-left: 0;
+  }
+
+  .bubble--ml .bubble__tip::after,
+  .bubble--mr .bubble__tip::after {
+    top: -6px;
+    border-bottom: 0;
+    border-right: 0;
+  }
+
+  .bubble--tl .bubble__tip::after,
+  .bubble--ml .bubble__tip::after {
+    left: 22px;
+  }
+
+  .bubble--tr .bubble__tip::after,
+  .bubble--mr .bubble__tip::after {
+    right: 22px;
+  }
+
+  /* Con el teclado se muestra siempre; con el mouse, solo en dispositivos que tienen hover
+     (en un celular un toque ya abre el enlace). */
+  .bubble:focus-visible .bubble__tip {
+    opacity: 1;
+    visibility: visible;
+    translate: 0 0;
+    transition-delay: 0s;
+  }
+
+  @media (hover: hover) {
+    .bubble:hover .bubble__tip {
+      opacity: 1;
+      visibility: visible;
+      translate: 0 0;
+      /* Pequeña espera para que no parpadee al pasar el mouse de largo */
+      transition-delay: 0.12s;
+    }
+  }
+
   /* Posición y tamaño de cada globo, en % de la imagen (medidos sobre el dibujo) */
   .bubble--tl { left: 17.7%; top: 4.4%;  width: 22.9%; height: 25.1%; animation-delay: 0s; }
   .bubble--tr { left: 59.5%; top: 3.9%;  width: 22.8%; height: 25%;   animation-delay: -1.2s; }
