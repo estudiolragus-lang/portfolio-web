@@ -1,0 +1,31 @@
+/* Los estilos base (.page-section, .tag, .skill-card) viven en projects/projects.css */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.skill-card__icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--hover-bg);
+  color: var(--accent-color);
+  margin-bottom: 16px;
+}
+
+.skill-card__title {
+  color: var(--text-primary);
+  font-size: 20px;
+  margin: 0 0 6px;
+}
+
+.skill-card__desc {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}

@@ -1,0 +1,121 @@
+/* Los estilos base (.page-section, .tag, .project-badge) viven en projects/projects.css */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.about-grid--even {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.about-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 28px;
+}
+
+.about-bio p {
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1.75;
+  margin: 0 0 16px;
+}
+
+.about-bio p:first-child {
+  color: var(--text-primary);
+  font-size: 17px;
+}
+
+.about-bio p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- Datos rápidos --- */
+.about-facts__list,
+.about-courses {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about-fact,
+.about-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.about-fact__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--hover-bg);
+  color: var(--accent-color);
+  flex-shrink: 0;
+}
+
+.about-fact__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.about-fact__label {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.about-fact__value {
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* --- Formación --- */
+.about-heading {
+  color: var(--text-primary);
+  font-size: 24px;
+  margin: 56px 0 20px;
+}
+
+.about-item__title {
+  color: var(--text-primary);
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 0 0 4px;
+}
+
+.about-item__meta {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+
+.about-courses .about-item__meta {
+  margin-bottom: 0;
+}
+
+.tag-list--lg .tag {
+  font-size: 14px;
+  padding: 8px 16px;
+}
+
+@media (max-width: 860px) {
+  .about-grid,
+  .about-grid--even {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

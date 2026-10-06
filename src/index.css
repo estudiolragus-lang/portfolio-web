@@ -1,0 +1,100 @@
+/* --- Design Tokens globales --- */
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg-primary: #0b111b;
+  --bg-nav: #0b111b;
+  --bg-input: #0b111b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-btn-secondary: #e2e8f0;
+  --text-btn-secondary-hover: #ffffff;
+  --accent-color: #38bdf8;
+  --accent-contrast: #0f172a;
+  --brand-pink: #ff1a81;
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-input: #334155;
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --btn-secondary-bg: rgba(255, 255, 255, 0.03);
+  --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --image-bg: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(56, 189, 248, 0.05));
+  --image-border: rgba(56, 189, 248, 0.3);
+  --btn-radius: 8px;
+  --bg-nav-glass: rgba(11, 17, 27, 0.4);
+  --card-bg: rgba(15, 25, 40, 0.75);
+  --card-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  --sky-top: #070d18;
+  --sky-bottom: #1d4161;
+  --hill-back: #172f4b;
+  --hill-mid: #0f1e31;
+  --hill-front: var(--bg-primary);
+  --cta-bg: #38bdf8;
+  --cta-text: #06202e;
+  --cta-sub: rgba(6, 32, 46, 0.75);
+  --cta-tile: #06202e;
+  --cta-tile-icon: #38bdf8;
+  --cta-shadow: 0 16px 34px -14px rgba(56, 189, 248, 0.7);
+  --cta2-bg: rgba(255, 255, 255, 0.04);
+  --cta2-border: rgba(248, 250, 252, 0.2);
+  --cta2-tile: rgba(255, 255, 255, 0.08);
+  --chip-bg: rgba(255, 255, 255, 0.03);
+  --chip-border: rgba(248, 250, 252, 0.14);
+  --chip-linkedin-tile: rgba(56, 189, 248, 0.14);
+  --chip-linkedin-icon: #38bdf8;
+  --chip-mail-tile: rgba(255, 26, 129, 0.14);
+  --chip-mail-icon: #ff4d9e;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --bg-primary: #f1f5f9;
+  --bg-nav: #ffffff;
+  --bg-input: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-btn-secondary: #1e293b;
+  --text-btn-secondary-hover: #0f172a;
+  --accent-color: #0284c7;
+  --accent-contrast: #ffffff;
+  --brand-pink: #e11d74;
+  --border-subtle: rgba(15, 23, 42, 0.12);
+  --border-input: #cbd5e1;
+  --hover-bg: rgba(15, 23, 42, 0.06);
+  --btn-secondary-bg: rgba(15, 23, 42, 0.03);
+  --nav-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+  --image-bg: linear-gradient(135deg, rgba(2, 132, 199, 0.12), rgba(225, 29, 116, 0.08));
+  --image-border: rgba(2, 132, 199, 0.35);
+  --bg-nav-glass: rgba(255, 255, 255, 0.55);
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+  --sky-top: #9cc2ea;
+  --sky-bottom: #d9e9f8;
+  --hill-back: #b6d1ee;
+  --hill-mid: #cddff3;
+  --hill-front: var(--bg-primary);
+  --cta-bg: #0284c7;
+  --cta-text: #ffffff;
+  --cta-sub: rgba(255, 255, 255, 0.88);
+  --cta-tile: rgba(255, 255, 255, 0.2);
+  --cta-tile-icon: #ffffff;
+  --cta-shadow: 0 16px 34px -14px rgba(2, 132, 199, 0.65);
+  --cta2-bg: #ffffff;
+  --cta2-border: rgba(15, 23, 42, 0.18);
+  --cta2-tile: #e2e8f0;
+  --chip-bg: #ffffff;
+  --chip-border: rgba(15, 23, 42, 0.14);
+  --chip-linkedin-tile: rgba(2, 132, 199, 0.12);
+  --chip-linkedin-icon: #0284c7;
+  --chip-mail-tile: rgba(225, 29, 116, 0.1);
+  --chip-mail-icon: #e11d74;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

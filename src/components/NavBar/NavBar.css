@@ -1,0 +1,230 @@
+/* Colores definidos en index.css (data-theme) */
+:root {
+  --nav-height: 80px;
+  --transition-speed: 0.2s;
+}
+
+/* --- Layout Principal --- */
+.navbar {
+  background-color: var(--bg-nav-glass);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  height: var(--nav-height);
+}
+
+/* --- Logo Fix --- */
+.navbar-logo a {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 60px; /* Ajusta esto según el tamaño real de tu imagen */
+  width: auto;
+  object-fit: contain;
+}
+
+/* --- Navegación --- */
+.navbar-links {
+  display: flex;
+  list-style: none;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color var(--transition-speed) ease;
+  position: relative;
+  padding: 8px 0;
+}
+
+.nav-item:hover {
+  color: var(--text-primary);
+}
+
+.nav-item.active {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--accent-color);
+  border-radius: 2px;
+}
+
+/* --- Acciones Secundarias (Tus antiguos botones) --- */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--border-subtle);
+  margin: 0 8px;
+}
+
+/* Estilo para los botones convertidos en íconos */
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all var(--transition-speed) ease;
+}
+
+.icon-btn:hover {
+  color: var(--accent-color);
+  background-color: var(--hover-bg);
+}
+
+/* --- Menú hamburguesa: etiquetas y botón ocultos en escritorio --- */
+.menu-toggle,
+.icon-btn__label,
+.navbar-links-mobile {
+  display: none;
+}
+
+/* --- Pantallas de hasta 930px: las acciones pasan al menú hamburguesa --- */
+@media (max-width: 930px) {
+  .menu-toggle {
+    display: flex;
+  }
+
+  .navbar-actions {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 5%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    min-width: 220px;
+    padding: 8px;
+    /* Fondo sólido: el texto de la página no debe verse a través del menú */
+    background-color: var(--bg-nav);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+  }
+
+  .navbar-actions.is-open {
+    display: flex;
+  }
+
+  .navbar-actions .icon-btn {
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 12px;
+    color: var(--text-primary);
+  }
+
+  .icon-btn__label {
+    display: inline;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .navbar-actions .divider {
+    width: auto;
+    height: 1px;
+    margin: 2px 0;
+  }
+}
+
+/* --- ≤768px: el logo pasa al pie de página y los links ocupan el espacio --- */
+@media (max-width: 768px) {
+  .navbar-logo {
+    display: none;
+  }
+
+  .navbar-container {
+    gap: 16px;
+  }
+
+  .navbar-links {
+    gap: 20px;
+  }
+}
+
+/* --- ≤640px: los links también pasan al menú hamburguesa --- */
+@media (max-width: 640px) {
+  .navbar-container > .navbar-links {
+    display: none;
+  }
+
+  .menu-toggle {
+    margin-left: auto;
+  }
+
+  .navbar-links-mobile {
+    display: block;
+  }
+
+  .navbar-links--mobile {
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 4px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .navbar-links--mobile .nav-item {
+    display: block;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+
+  .navbar-links--mobile .nav-item:hover {
+    background-color: var(--hover-bg);
+  }
+
+  /* En el menú vertical, el indicador activo es una barra lateral en vez de un subrayado */
+  .navbar-links--mobile .nav-item.active {
+    color: var(--accent-color);
+  }
+
+  .navbar-links--mobile .nav-item.active::after {
+    top: 10px;
+    bottom: 10px;
+    width: 3px;
+    height: auto;
+    left: 0;
+  }
+}

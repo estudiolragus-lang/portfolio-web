@@ -1,0 +1,14 @@
+.app-container {
+  position: relative;
+  overflow-x: hidden;
+}
+
+.main-content {
+  position: relative;
+}
+
+/* El contenido va por encima del fondo decorativo */
+.page-content {
+  position: relative;
+  z-index: 1;
+}
