@@ -8,6 +8,9 @@ import { useAudio } from '../../context/useAudio.js';
 import { NAV_ITEMS } from '../../data/navItems';
 import { contact } from '../../data/contact';
 
+// "Contacto" no va en los links del pie: ya está el botón "Contactarme" de la tarjeta de arriba
+const FOOTER_LINKS = NAV_ITEMS.filter(({ to }) => to !== '/contact');
+
 const SOCIAL = [
   { id: 'linkedin', label: 'LinkedIn', href: contact.linkedin, Icon: LinkedinIcon, external: true },
   { id: 'github', label: 'GitHub', href: contact.github, Icon: GithubIcon, external: true },
@@ -48,7 +51,7 @@ function Footer() {
 
           <nav aria-label="Pie de página">
             <ul className="footer-links">
-              {NAV_ITEMS.map(({ to, label }) => (
+              {FOOTER_LINKS.map(({ to, label }) => (
                 <li key={to}>
                   <NavLink
                     to={to}
