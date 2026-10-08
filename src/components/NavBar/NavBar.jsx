@@ -13,14 +13,7 @@ import sonidoOnSound from '../../assets/sounds/sonidoOn.mp3';
 // 1. Importamos el hook global
 import { useAudio } from '../../context/useAudio.js';
 import { useTheme } from '../../context/ThemeContext';
-
-const NAV_ITEMS = [
-  { to: '/', label: 'Inicio' },
-  { to: '/about', label: 'Sobre mí' },
-  { to: '/skills', label: 'Habilidades' },
-  { to: '/projects', label: 'Proyectos' },
-  { to: '/contact', label: 'Contacto' },
-];
+import { NAV_ITEMS } from '../../data/navItems';
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);

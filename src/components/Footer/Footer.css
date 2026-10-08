@@ -1,29 +1,273 @@
-/* Pie de página: logo a la izquierda y derechos a la derecha. En celular, el logo de la barra superior se oculta y queda acá. */
+/* Pie de página: tarjeta de contacto arriba, fila con logo, links y redes, y cierre.
+   Los colores salen de las variables del tema (index.css). */
 .footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 40px 5% 32px;
-  border-top: 1px solid var(--border-subtle);
-  font-family: 'Poppins', sans-serif;
   position: relative;
   z-index: 1;
+  padding: 48px 0 24px;
+  border-top: 1px solid var(--border-subtle);
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer__inner {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- Llamada a la acción --- */
+.footer-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 32px;
+  border-radius: 18px;
+  border: 1px solid var(--border-subtle);
+  background: var(--footer-cta-bg);
+}
+
+.footer-cta__title {
+  margin: 0 0 4px;
+  color: var(--text-primary);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.footer-cta__text {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.footer-cta__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 14px 22px;
+  border-radius: 14px;
+  background: var(--cta-bg);
+  color: var(--cta-text);
+  box-shadow: var(--cta-shadow);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.footer-cta__button:hover {
+  transform: translateY(-2px);
+}
+
+.footer-cta__button svg {
+  transition: transform 0.2s ease;
+}
+
+.footer-cta__button:hover svg {
+  transform: translateX(3px);
+}
+
+/* --- Fila principal: logo, links y redes --- */
+.footer-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 40px;
 }
 
 .footer__logo {
   text-decoration: none;
 }
 
-.footer__copy {
-  color: var(--text-secondary);
-  font-size: 13px;
-  margin: 0;
-  text-align: center;
+/* El logo del pie es más chico que el de la barra superior */
+.footer .logo__name {
+  font-size: 28px;
 }
 
+.footer .logo__sub {
+  font-size: 10px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-link {
+  display: block;
+  padding: 8px 0;
+  color: var(--text-btn-secondary);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover,
+.footer-link.is-active {
+  color: var(--accent-color);
+}
+
+.footer-social {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-social__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--chip-border);
+  background: var(--chip-bg);
+  color: var(--text-btn-secondary);
+  transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.footer-social__link:hover {
+  transform: translateY(-3px);
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+/* --- Cierre --- */
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.footer-bottom__copy {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.footer-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 4px;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.footer-top:hover {
+  color: var(--accent-color);
+}
+
+.footer-cta__button:focus-visible,
+.footer-link:focus-visible,
+.footer-social__link:focus-visible,
+.footer-top:focus-visible,
+.footer__logo:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+}
+
+/* --- Entre 769px y 960px: se compacta la fila para que los links no pasen a dos líneas --- */
+@media (min-width: 769px) and (max-width: 960px) {
+  .footer-main {
+    gap: 14px;
+  }
+
+  .footer-links {
+    gap: 4px 16px;
+  }
+
+  .footer-link {
+    font-size: 13.5px;
+  }
+
+  .footer-social {
+    gap: 8px;
+  }
+}
+
+/* --- Celular y tablet angosta: todo apilado y centrado --- */
 @media (max-width: 768px) {
   .footer {
-    display: flex;
+    padding: 36px 0 20px;
+  }
+
+  .footer-cta {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+    padding: 24px 20px;
+  }
+
+  .footer-cta__title {
+    font-size: 21px;
+  }
+
+  /* Botón de ancho completo y fácil de tocar */
+  .footer-cta__button {
+    min-height: 48px;
+  }
+
+  .footer-main {
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 32px;
+    text-align: center;
+  }
+
+  .footer-social {
+    gap: 12px;
+  }
+
+  .footer-social__link {
+    width: 46px;
+    height: 46px;
+  }
+
+  .footer-bottom {
+    flex-direction: column-reverse;
+    gap: 6px;
+    margin-top: 24px;
+    text-align: center;
+  }
+
+  .footer-top {
+    min-height: 44px;
+    padding: 0 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-cta__button,
+  .footer-cta__button svg,
+  .footer-social__link {
+    transition: none;
+  }
+
+  .footer-cta__button:hover,
+  .footer-cta__button:hover svg,
+  .footer-social__link:hover {
+    transform: none;
   }
 }

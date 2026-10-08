@@ -43,6 +43,7 @@
   --chip-linkedin-icon: #38bdf8;
   --chip-mail-tile: rgba(255, 26, 129, 0.14);
   --chip-mail-icon: #ff4d9e;
+  --footer-cta-bg: linear-gradient(135deg, rgba(56, 189, 248, 0.16), rgba(255, 26, 129, 0.1));
 }
 
 [data-theme='light'] {
@@ -87,6 +88,7 @@
   --chip-linkedin-icon: #0284c7;
   --chip-mail-tile: rgba(225, 29, 116, 0.1);
   --chip-mail-icon: #e11d74;
+  --footer-cta-bg: linear-gradient(135deg, rgba(2, 132, 199, 0.12), rgba(225, 29, 116, 0.08));
 }
 
 body {
