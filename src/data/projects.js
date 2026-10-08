@@ -12,8 +12,9 @@ export const projects = [
       'Analicé el problema de los lavaderos y definí objetivos, usuarios y cuatro roles: administrador, encargado, empleado y cliente.',
       'Prioricé las funcionalidades en MVP, importantes y futuras, con sus reglas de negocio y el flujo completo del servicio.',
       'Diseñé el modelo de datos y la gestión de acceso de las empresas.',
+      'Definí el stack del proyecto: React, Node.js, Express y PostgreSQL.',
     ],
-    stack: ['SQL Server', 'API REST', 'JavaScript', 'Roles y permisos'],
+    stack: ['React', 'Node.js', 'Express', 'PostgreSQL'],
     links: [{ label: 'Ver proyecto', url: null }],
   },
   {
