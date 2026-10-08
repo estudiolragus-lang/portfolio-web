@@ -236,6 +236,17 @@
     text-align: center;
   }
 
+  /* En celular el logo es el protagonista del pie: más grande que en escritorio */
+  .footer .logo__name {
+    font-size: 44px;
+  }
+
+  .footer .logo__sub {
+    font-size: 13px;
+    /* Con la letra más grande, la cola de la "g" llegaba a pisar este texto */
+    margin-top: 3px;
+  }
+
   .footer-social {
     gap: 12px;
   }
