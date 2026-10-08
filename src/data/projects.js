@@ -2,18 +2,18 @@
 // `links`: dejá `url: null` mientras no esté publicado; el botón queda como "Próximamente".
 export const projects = [
   {
-    id: 'saas-gastronomia',
+    id: 'click-and-wash',
     category: 'Desarrollo',
-    status: 'En desarrollo',
-    title: 'SaaS de Gastronomía',
+    status: 'En análisis y diseño',
+    title: 'Click&Wash',
     summary:
-      'Sistema web para la gestión de restaurantes: pedidos, cupones de descuento y carta pública para los clientes.',
+      'Sistema web para locales de lavado de autos: turnos sin superposición, estado de cada vehículo, control de capacidad, empleados, ingresos y gastos.',
     did: [
-      'Desarrollé el backend con C# y ASP.NET: API REST, consultas y comandos.',
-      'Armé la carta pública y el flujo de pedidos para el cliente final.',
-      'Probé manualmente cada flujo y registré los errores encontrados.',
+      'Analicé el problema de los lavaderos y definí objetivos, usuarios y cuatro roles: administrador, encargado, empleado y cliente.',
+      'Prioricé las funcionalidades en MVP, importantes y futuras, con sus reglas de negocio y el flujo completo del servicio.',
+      'Diseñé el modelo de datos y la gestión de acceso de las empresas.',
     ],
-    stack: ['C#', 'ASP.NET', 'JavaScript', 'API REST'],
+    stack: ['SQL Server', 'API REST', 'JavaScript', 'Roles y permisos'],
     links: [{ label: 'Ver proyecto', url: null }],
   },
   {
