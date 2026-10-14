@@ -17,9 +17,8 @@ export const projects = [
       'Escribí más de 170 pruebas de API y 24 recorridos de punta a punta con Playwright.',
     ],
     stack: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Playwright'],
-    // Repositorio privado: se muestra el aviso en lugar de un botón que llevaría a un error 404.
-    // Cuando sea público (o tenga una dirección en línea), poné acá la `url` y aparece el botón.
-    links: [{ label: 'Ver proyecto', url: null, note: 'Código privado, disponible a pedido' }],
+    // El código es privado; el sistema está en línea y se puede probar.
+    links: [{ label: 'Ver proyecto', url: 'https://clickwash.onrender.com/' }],
   },
   {
     id: 'plataforma-educativa',
