@@ -63,7 +63,7 @@ function Projects() {
                 ) : (
                   <span key={link.label} className="btn-disabled">
                     <Clock size={16} aria-hidden="true" />
-                    Próximamente
+                    {link.note ?? 'Próximamente'}
                   </span>
                 ),
               )}

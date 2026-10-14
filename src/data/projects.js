@@ -1,21 +1,25 @@
 // Editá este archivo para actualizar los proyectos del portfolio.
-// `links`: dejá `url: null` mientras no esté publicado; el botón queda como "Próximamente".
+// `links`: dejá `url: null` mientras no esté publicado; el botón queda como "Próximamente"
+// (o con el texto de `note`, si lo definís).
 export const projects = [
   {
     id: 'click-and-wash',
     category: 'Desarrollo',
-    status: 'En análisis y diseño',
+    status: 'Terminado',
     title: 'Click&Wash',
     summary:
-      'Sistema web para locales de lavado de autos: turnos sin superposición, estado de cada vehículo, control de capacidad, empleados, ingresos y gastos.',
+      'Plataforma para lavaderos de autos (SaaS multi-empresa): turnos, clientes, equipo, inventario, caja y finanzas, con un mapa público para que los conductores encuentren dónde lavar y reserven.',
     did: [
-      'Analicé el problema de los lavaderos y definí objetivos, usuarios y cuatro roles: administrador, encargado, empleado y cliente.',
-      'Prioricé las funcionalidades en MVP, importantes y futuras, con sus reglas de negocio y el flujo completo del servicio.',
-      'Diseñé el modelo de datos y la gestión de acceso de las empresas.',
-      'Definí el stack del proyecto: React, Node.js, Express y PostgreSQL.',
+      'Construí la API con Node.js y Express sobre PostgreSQL, con 28 migraciones SQL propias.',
+      'Armé la interfaz con React: reserva de turnos con mapa, panel del lavadero, caja y ganancia, y reportes descargables en Excel.',
+      'Implementé roles y permisos (dueño, encargado, empleado, cliente y administrador), aislamiento entre empresas y planes con límites que cumple la API.',
+      'Cuidé la seguridad de las cuentas: sesión en cookie HttpOnly, verificación por correo, bloqueo por intentos fallidos y protección CSRF.',
+      'Escribí más de 170 pruebas de API y 24 recorridos de punta a punta con Playwright.',
     ],
-    stack: ['React', 'Node.js', 'Express', 'PostgreSQL'],
-    links: [{ label: 'Ver proyecto', url: null }],
+    stack: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Playwright'],
+    // Repositorio privado: se muestra el aviso en lugar de un botón que llevaría a un error 404.
+    // Cuando sea público (o tenga una dirección en línea), poné acá la `url` y aparece el botón.
+    links: [{ label: 'Ver proyecto', url: null, note: 'Código privado, disponible a pedido' }],
   },
   {
     id: 'plataforma-educativa',
