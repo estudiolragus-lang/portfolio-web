@@ -4,6 +4,7 @@ import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { projects } from '../../data/projects';
 import pickSound from '../../assets/sounds/pick.mp3';
 import { useAudio } from '../../context/useAudio.js';
+import { openExternal } from '../../utils/openExternal.js';
 
 function Projects() {
   useDocumentTitle('Proyectos');
@@ -55,7 +56,10 @@ function Projects() {
                     target="_blank"
                     rel="noreferrer"
                     className="btn btn-primary"
-                    onClick={() => playSound(pickSound)}
+                    onClick={(e) => {
+                      playSound(pickSound);
+                      openExternal(e);
+                    }}
                   >
                     {link.label}
                     <ExternalLink size={16} aria-hidden="true" />

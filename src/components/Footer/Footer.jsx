@@ -5,6 +5,7 @@ import { LinkedinIcon, GithubIcon } from '../BrandIcons/BrandIcons.jsx';
 import './Footer.css';
 import pickSound from '../../assets/sounds/pick.mp3';
 import { useAudio } from '../../context/useAudio.js';
+import { openExternal } from '../../utils/openExternal.js';
 import { NAV_ITEMS } from '../../data/navItems';
 import { contact } from '../../data/contact';
 
@@ -75,7 +76,10 @@ function Footer() {
                   aria-label={label}
                   title={label}
                   {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-                  onClick={() => playSound(pickSound)}
+                  onClick={(e) => {
+                    playSound(pickSound);
+                    openExternal(e);
+                  }}
                 >
                   <Icon size={18} aria-hidden="true" />
                 </a>

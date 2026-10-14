@@ -7,6 +7,7 @@ import { contact, shortUrl } from '../../data/contact';
 import { LinkedinIcon, GithubIcon } from '../../components/BrandIcons/BrandIcons.jsx';
 import pickSound from '../../assets/sounds/pick.mp3';
 import { useAudio } from '../../context/useAudio.js';
+import { openExternal } from '../../utils/openExternal.js';
 
 const MODE_ICONS = { remote: Laptop, hybrid: Building2, onsite: MapPin };
 
@@ -194,7 +195,10 @@ function Contact() {
               href={href}
               className="channel"
               {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-              onClick={() => playSound(pickSound)}
+              onClick={(e) => {
+                playSound(pickSound);
+                openExternal(e);
+              }}
             >
               <span className="channel__icon">
                 <Icon size={18} aria-hidden="true" />

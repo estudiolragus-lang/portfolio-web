@@ -6,6 +6,7 @@ import miCaricatura from '../../assets/images/miCaricatura.webp';
 import miCaricaturaEmpujando from '../../assets/images/miCaricaturaEmpujando.webp';
 import miCaricaturaPensamiento from '../../assets/images/miCaricaturaPensamiento.webp';
 import { useAudio } from '../../context/useAudio.js';
+import { openExternal } from '../../utils/openExternal.js';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { projects } from '../../data/projects';
 import { contact, shortUrl } from '../../data/contact';
@@ -113,7 +114,10 @@ function Home() {
             target="_blank"
             rel="noreferrer"
             className="contact-chip contact-chip--linkedin"
-            onClick={() => playSound(pickSound)}
+            onClick={(e) => {
+              playSound(pickSound);
+              openExternal(e);
+            }}
           >
             <span className="contact-chip__icon">
               <LinkedinIcon />
@@ -172,7 +176,14 @@ function Home() {
               className={`bubble bubble--${pos}${primary ? ' bubble--primary' : ''}`}
               aria-describedby={`tip-${id}`}
               {...(internal ? {} : { target: href.startsWith('http') ? '_blank' : undefined, rel: 'noreferrer' })}
-              onClick={internal ? (e) => goTo(e, href) : () => playSound(pickSound)}
+              onClick={
+                internal
+                  ? (e) => goTo(e, href)
+                  : (e) => {
+                      playSound(pickSound);
+                      openExternal(e);
+                    }
+              }
             >
               {label}
               {/* Tooltip: aparece con el mouse o el teclado. Está oculto para lectores
