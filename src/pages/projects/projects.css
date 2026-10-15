@@ -168,3 +168,24 @@
     transform: none;
   }
 }
+
+.page-note {
+  margin: 18px 0 0;
+  padding: 14px 16px;
+  border-left: 3px solid var(--accent-color);
+  background: var(--hover-bg);
+  border-radius: 0 10px 10px 0;
+  color: var(--text-secondary);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.page-note strong {
+  color: var(--text-primary);
+}
+
+.project-badge--ai {
+  background: rgba(255, 26, 129, 0.12);
+  color: var(--brand-pink);
+  border-color: rgba(255, 26, 129, 0.35);
+}

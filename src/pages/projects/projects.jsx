@@ -19,6 +19,11 @@ function Projects() {
           Tres proyectos donde aplico desarrollo y calidad: dos sistemas web y una suite de pruebas
           automatizadas.
         </p>
+        <p className="page-note">
+          <strong>Cómo trabajo:</strong> estos proyectos los desarrollé con mucha ayuda de inteligencia
+          artificial. Yo defino qué hay que construir, reviso, pruebo y decido; la IA escribe buena parte del
+          código. Mis conocimientos de QA y desarrollo me permiten dirigirla y detectar lo que está mal.
+        </p>
       </header>
 
       <div className="projects-grid">
@@ -26,13 +31,14 @@ function Projects() {
           <article key={project.id} className="project-card">
             <div className="project-card__top">
               <span className="project-badge">{project.category}</span>
+              {project.withAI && <span className="project-badge project-badge--ai">Con ayuda de IA</span>}
               <span className="project-status">{project.status}</span>
             </div>
 
             <h2 className="project-card__title">{project.title}</h2>
             <p className="project-card__summary">{project.summary}</p>
 
-            <h3 className="project-card__label">Qué hice</h3>
+            <h3 className="project-card__label">Mi rol</h3>
             <ul className="project-card__list">
               {project.did.map((item) => (
                 <li key={item}>{item}</li>
