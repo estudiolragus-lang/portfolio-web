@@ -39,6 +39,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
+  align-items: start;
 }
 
 .project-card,
@@ -61,13 +62,15 @@
 
 .project-card__top {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   align-items: center;
-  gap: 12px;
+  gap: 8px 10px;
   margin-bottom: 16px;
 }
 
 .project-badge {
+  white-space: nowrap;
   background: var(--hover-bg);
   color: var(--accent-color);
   font-size: 12px;
@@ -77,6 +80,8 @@
 }
 
 .project-status {
+  margin-left: auto;
+  white-space: nowrap;
   color: var(--text-secondary);
   font-size: 12px;
 }
@@ -188,4 +193,68 @@
   background: rgba(255, 26, 129, 0.12);
   color: var(--brand-pink);
   border-color: rgba(255, 26, 129, 0.35);
+}
+
+.project-card__summary {
+  margin-bottom: 16px;
+}
+
+.project-card__stack {
+  margin-bottom: 20px;
+}
+
+/* "Mi rol" desplegable: la tarjeta se ve corta y el detalle está a un toque */
+.project-details {
+  margin: 0 -28px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--hover-bg);
+}
+
+.project-details__summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.project-details__summary::-webkit-details-marker {
+  display: none;
+}
+
+.project-details__summary:hover {
+  color: var(--accent-color);
+}
+
+.project-details__summary:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: -2px;
+}
+
+.project-details__count {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.project-details__chevron {
+  color: var(--text-secondary);
+  transition: transform 0.2s ease;
+}
+
+.project-details[open] .project-details__chevron {
+  transform: rotate(180deg);
+  color: var(--accent-color);
+}
+
+.project-details .project-card__list {
+  margin: 0;
+  padding: 4px 28px 20px 46px;
+}
+
+.project-card__actions {
+  padding-top: 20px;
 }

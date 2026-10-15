@@ -1,4 +1,4 @@
-import { ExternalLink, Clock } from 'lucide-react';
+import { ExternalLink, Clock, ChevronDown } from 'lucide-react';
 import './projects.css';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { projects } from '../../data/projects';
@@ -27,7 +27,7 @@ function Projects() {
       </header>
 
       <div className="projects-grid">
-        {projects.map((project) => (
+        {projects.map((project, index) => (
           <article key={project.id} className="project-card">
             <div className="project-card__top">
               <span className="project-badge">{project.category}</span>
@@ -38,20 +38,27 @@ function Projects() {
             <h2 className="project-card__title">{project.title}</h2>
             <p className="project-card__summary">{project.summary}</p>
 
-            <h3 className="project-card__label">Mi rol</h3>
-            <ul className="project-card__list">
-              {project.did.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-
-            <ul className="tag-list" aria-label="Tecnologías utilizadas">
+            <ul className="tag-list project-card__stack" aria-label="Tecnologías utilizadas">
               {project.stack.map((tech) => (
                 <li key={tech} className="tag">
                   {tech}
                 </li>
               ))}
             </ul>
+
+            <details className="project-details" open={index === 0}>
+              <summary className="project-details__summary">
+                <span>
+                  Mi rol <span className="project-details__count">({project.did.length})</span>
+                </span>
+                <ChevronDown size={18} className="project-details__chevron" aria-hidden="true" />
+              </summary>
+              <ul className="project-card__list">
+                {project.did.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </details>
 
             <div className="project-card__actions">
               {project.links.map((link) =>
