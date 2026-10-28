@@ -3,6 +3,7 @@ import { ExternalLink, Clock, ChevronDown } from 'lucide-react';
 import './projects.css';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { projects } from '../../data/projects';
+import ProjectShots from '../../components/ProjectShots/ProjectShots.jsx';
 import pickSound from '../../assets/sounds/pick.mp3';
 import { useAudio } from '../../context/useAudio.js';
 import { openExternal } from '../../utils/openExternal.js';
@@ -50,6 +51,8 @@ function Projects() {
                 </li>
               ))}
             </ul>
+
+            {project.shots && <ProjectShots shots={project.shots} title={project.title} />}
 
             <details className="project-details" open={index === 0 && openFirst}>
               <summary className="project-details__summary">
