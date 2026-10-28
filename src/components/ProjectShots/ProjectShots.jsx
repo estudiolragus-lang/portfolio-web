@@ -4,7 +4,7 @@ import './ProjectShots.css';
 
 // Galería de capturas de un proyecto: miniaturas en la tarjeta y, al tocar una, la imagen grande
 // en un cuadro de diálogo nativo (cierra con Escape, devuelve el foco y se mueve con las flechas).
-function ProjectShots({ shots, title }) {
+function ProjectShots({ shots, title, label, footnote = '', contain = false }) {
   const [current, setCurrent] = useState(null);
   const dialogRef = useRef(null);
   const total = shots.length;
@@ -32,13 +32,13 @@ function ProjectShots({ shots, title }) {
 
   return (
     <>
-      <ul className="shots" aria-label={`Capturas de ${title}`}>
+      <ul className={`shots ${contain ? 'shots--contain' : ''}`} aria-label={label ?? `Capturas de ${title}`}>
         {shots.map((s, index) => (
           <li key={s.id}>
             <button type="button" className="shots__thumb" onClick={() => setCurrent(index)}>
               <img src={s.thumb} alt="" width="480" height="313" loading="lazy" />
               <span className="shots__label">{s.title}</span>
-              <span className="sr-only"> (ver captura ampliada)</span>
+              <span className="sr-only"> (ver ampliada)</span>
             </button>
           </li>
         ))}
@@ -47,7 +47,7 @@ function ProjectShots({ shots, title }) {
       <dialog
         ref={dialogRef}
         className="shots-dialog"
-        aria-label={shot ? `Captura: ${shot.title}` : 'Captura'}
+        aria-label={shot ? `${shot.title}` : 'Imagen ampliada'}
         onClose={() => setCurrent(null)}
         onClick={onDialogClick}
         onKeyDown={onKeyDown}
@@ -59,7 +59,8 @@ function ProjectShots({ shots, title }) {
               <strong>{shot.title}</strong>
               <span>{shot.caption}</span>
               <small>
-                {current + 1} de {total} · Datos de ejemplo
+                {current + 1} de {total}
+                {footnote ? ` · ${footnote}` : ''}
               </small>
             </figcaption>
           </figure>

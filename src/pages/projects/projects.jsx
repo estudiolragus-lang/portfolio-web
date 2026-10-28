@@ -55,7 +55,7 @@ function Projects() {
               ))}
             </ul>
 
-            {project.shots && <ProjectShots shots={project.shots} title={project.title} />}
+            {project.shots && <ProjectShots shots={project.shots} title={project.title} footnote="Datos de ejemplo" />}
 
             <details className="project-details" open={index === 0 && openFirst}>
               <summary className="project-details__summary">

@@ -165,3 +165,10 @@
     border-radius: 0;
   }
 }
+
+/* Certificados: se ven enteros, sin recortar */
+.shots--contain .shots__thumb img {
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #0b111b;
+}

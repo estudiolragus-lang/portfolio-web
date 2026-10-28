@@ -1,4 +1,9 @@
 // Editá este archivo para actualizar la página "Sobre mí".
+import angularThumb from '../assets/images/certificados/angular-thumb.webp';
+import angularFull from '../assets/images/certificados/angular-full.webp';
+import coderhouseThumb from '../assets/images/certificados/coderhouse-thumb.webp';
+import coderhouseFull from '../assets/images/certificados/coderhouse-full.webp';
+
 export const about = {
   name: 'Agustín García',
   role: 'QA Tester Junior',
@@ -28,11 +33,32 @@ export const about = {
       place: 'Instituto Cervantes',
       period: '2024 – 2026',
       status: 'Finalizada',
+      // Materias cursadas que más tienen que ver con el perfil
+      highlights: ['Testeador de Software', 'Proyecto Integrador I y II', 'Bases de Datos', 'Ciberseguridad', 'Aplicaciones para Móviles'],
     },
   ],
   courses: [
-    { title: 'Testing QA Manual', place: 'Coderhouse', detail: '26 horas · Certificado' },
-    { title: 'Angular', place: 'Educación IT', detail: '18 horas' },
+    { title: 'Testing QA Manual', place: 'Coderhouse', detail: '26 horas · Certificado (febrero de 2025)' },
+    { title: 'Angular', place: 'EducaciónIT', detail: '18 horas · Certificado (diciembre de 2025)' },
+  ],
+  // Certificados (imágenes de los diplomas): se ven ampliados al tocarlos
+  certificates: [
+    {
+      id: 'coderhouse',
+      title: 'Testing QA Manual · Coderhouse',
+      caption: '26 horas en 7 semanas · 5 de febrero de 2025',
+      alt: 'Certificado de Coderhouse del curso Testing QA Manual, a nombre de Agustin Garcia, con 26 horas de duración.',
+      thumb: coderhouseThumb,
+      full: coderhouseFull,
+    },
+    {
+      id: 'angular',
+      title: 'Angular · EducaciónIT',
+      caption: '18 horas · 14 de diciembre de 2025',
+      alt: 'Certificado de aprobación de EducaciónIT del curso Angular, a nombre de Agustin Garcia, con 18 horas.',
+      thumb: angularThumb,
+      full: angularFull,
+    },
   ],
   softSkills: [
     'Enfoque en calidad y detalle',

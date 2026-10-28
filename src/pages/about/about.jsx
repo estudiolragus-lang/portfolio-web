@@ -3,6 +3,7 @@ import '../projects/projects.css';
 import './about.css';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { about } from '../../data/about';
+import ProjectShots from '../../components/ProjectShots/ProjectShots.jsx';
 
 const FACT_ICONS = { location: MapPin, languages: Languages, target: Target };
 
@@ -64,6 +65,15 @@ function About() {
                     {item.place} · {item.period}
                   </p>
                   <span className="project-badge">{item.status}</span>
+                  {item.highlights && (
+                    <ul className="about-highlights" aria-label="Materias destacadas">
+                      {item.highlights.map((subject) => (
+                        <li key={subject} className="tag">
+                          {subject}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </li>
             ))}
@@ -86,6 +96,7 @@ function About() {
               </li>
             ))}
           </ul>
+          <ProjectShots shots={about.certificates} title="certificados" label="Certificados" contain />
         </article>
       </div>
 
