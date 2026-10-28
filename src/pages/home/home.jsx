@@ -84,7 +84,7 @@ function Home() {
         </h1>
 
         <p className="hero-subheadline">
-          Técnico Superior en Desarrollo Web y Aplicaciones Digitales. Busco mi primera oportunidad como <strong>QA Tester</strong>: hoy hago testing manual y estoy sumando automatización con <strong>Playwright</strong>. Mi base en <strong>JavaScript, React y SQL</strong> me permite entender lo que pruebo.
+          Técnico Superior en Desarrollo Web y Aplicaciones Digitales. Busco mi primera oportunidad como <strong>QA Tester</strong>: hago testing manual y automatizo pruebas de punta a punta con <strong>Playwright</strong>. Mi base en <strong>JavaScript, React y SQL</strong> me permite entender lo que pruebo.
         </p>
 
         <div className="hero-ctas">

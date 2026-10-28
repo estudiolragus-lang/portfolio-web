@@ -3,9 +3,11 @@ import { ArrowLeft } from 'lucide-react';
 import '../projects/projects.css';
 import './notFound.css';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
+import { useNoIndex } from '../../hooks/useNoIndex';
 
 function NotFound() {
   useDocumentTitle('Página no encontrada');
+  useNoIndex();
 
   return (
     <section className="page-section not-found">

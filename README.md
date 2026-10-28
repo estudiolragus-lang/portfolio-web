@@ -1,6 +1,6 @@
 # Portfolio de Agustín García · QA Tester
 
-Portfolio personal de **Agustín García**, QA Tester Junior (Córdoba, Argentina): testing manual, base en desarrollo web y automatización de pruebas con Playwright en camino.
+Portfolio personal de **Agustín García**, QA Tester Junior (Córdoba, Argentina): testing manual, base en desarrollo web y automatización de pruebas con Playwright.
 
 ## Tecnologías
 

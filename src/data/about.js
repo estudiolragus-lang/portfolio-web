@@ -7,8 +7,8 @@ export const about = {
   bio: [
     'Me recibí en 2026 como Técnico Superior en Desarrollo Web y Aplicaciones Digitales en el Instituto Cervantes. Vivo en Córdoba, Argentina.',
     'Mi foco es la calidad del software. Me formé en testing QA manual: analizo requerimientos, diseño y ejecuto casos de prueba, hago pruebas funcionales, de regresión y smoke, y reporto los bugs con claridad para que el equipo pueda resolverlos rápido.',
-    'Como vengo del desarrollo, entiendo lo que pruebo. Trabajo con JavaScript y React, con Angular y ASP.NET, y con bases de datos SQL Server.',
-    'Hoy mi fuerte es el testing manual y estoy dando el siguiente paso: aprender automatización de pruebas con Playwright.',
+    'Como vengo del desarrollo, entiendo lo que pruebo. Trabajo con JavaScript y React, con Angular y ASP.NET, y con bases de datos SQL Server. Además desarrollé Click&Wash (Node.js, Express y PostgreSQL) con ayuda de inteligencia artificial.',
+    'Hoy mi fuerte es el testing manual, y ya automaticé pruebas de punta a punta con Playwright y GitHub Actions en mis proyectos.',
   ],
   facts: [
     { icon: 'location', label: 'Ubicación', value: 'Córdoba, Argentina' },
