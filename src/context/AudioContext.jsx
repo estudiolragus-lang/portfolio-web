@@ -5,7 +5,7 @@ import pickSound from '../assets/sounds/pick.mp3';
 import sonidoOffSound from '../assets/sounds/sonidoOff.mp3';
 import sonidoOnSound from '../assets/sounds/sonidoOn.mp3';
 
-// Sonidos de la interfaz: se descargan una sola vez al abrir el sitio.
+// Sonidos de la interfaz: se descargan una sola vez, sin frenar la carga de la página.
 const SOUNDS = [clickSound, pickSound, sonidoOffSound, sonidoOnSound];
 
 // Eventos que "desbloquean" el audio (los navegadores de celular lo exigen)
@@ -14,7 +14,7 @@ const UNLOCK_EVENTS = ['pointerdown', 'touchstart', 'keydown'];
 /*
  * Antes cada clic creaba un `new Audio(...)`, que en el celular vuelve a pedir y
  * decodificar el archivo cada vez (de ahí la demora). Ahora:
- *   1. Los archivos se descargan al cargar el sitio.
+ *   1. Los archivos se descargan cuando el navegador queda libre.
  *   2. En el primer toque se decodifican a memoria con Web Audio.
  *   3. Cada sonido se reproduce desde memoria, sin demora.
  * Si Web Audio no está listo todavía, se usa un <audio> ya precargado como respaldo.
@@ -32,14 +32,14 @@ export const AudioProvider = ({ children }) => {
     let element = elementsRef.current.get(src);
     if (!element) {
       element = new Audio(src);
-      element.preload = 'auto';
+      element.preload = 'none'; // el archivo ya se descarga aparte (ensureRaw); así no se pide dos veces
       elementsRef.current.set(src, element);
     }
     return element;
   }, []);
 
-  // Descarga y precarga todos los sonidos apenas abre el sitio
-  useEffect(() => {
+  // Descarga los archivos de sonido (una sola vez). Se pide también al primer toque si todavía no se hizo.
+  const ensureRaw = useCallback(() => {
     SOUNDS.forEach((src) => {
       if (!rawRef.current.has(src)) {
         rawRef.current.set(
@@ -49,9 +49,16 @@ export const AudioProvider = ({ children }) => {
             .catch(() => null),
         );
       }
-      getElement(src);
     });
-  }, [getElement]);
+  }, []);
+
+  // Se precargan cuando el navegador queda libre, para no competir con la imagen y el texto de la portada
+  useEffect(() => {
+    const schedule = window.requestIdleCallback ?? ((callback) => setTimeout(callback, 1500));
+    const cancel = window.cancelIdleCallback ?? clearTimeout;
+    const handle = schedule(ensureRaw, { timeout: 4000 });
+    return () => cancel(handle);
+  }, [ensureRaw]);
 
   // Con el primer toque o tecla: se activa Web Audio y se decodifican los sonidos
   useEffect(() => {
@@ -68,6 +75,7 @@ export const AudioProvider = ({ children }) => {
       if (decodedRef.current) return;
       decodedRef.current = true;
 
+      ensureRaw();
       rawRef.current.forEach((promise, src) => {
         promise.then((data) => {
           if (!data) return;
@@ -83,7 +91,7 @@ export const AudioProvider = ({ children }) => {
 
     UNLOCK_EVENTS.forEach((name) => window.addEventListener(name, unlock, { passive: true }));
     return () => UNLOCK_EVENTS.forEach((name) => window.removeEventListener(name, unlock));
-  }, []);
+  }, [ensureRaw]);
 
   const toggleSound = () => {
     setSoundEnabled((prev) => !prev);

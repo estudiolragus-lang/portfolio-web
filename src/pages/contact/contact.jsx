@@ -23,7 +23,10 @@ const EMPTY_FORM = { name: '', email: '', message: '', _gotcha: '' };
 const SEND_TIMEOUT_MS = 15000;
 
 function Contact() {
-  useDocumentTitle('Contacto');
+  useDocumentTitle(
+    'Contacto',
+    'Contactá a Agustín García, QA Tester Junior en Córdoba, Argentina. Disponible para trabajo remoto, híbrido y presencial.',
+  );
   const { playSound } = useAudio();
   const [form, setForm] = useState(EMPTY_FORM);
   // idle | sending | success | mailto | error

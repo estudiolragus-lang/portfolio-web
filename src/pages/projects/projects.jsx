@@ -12,7 +12,10 @@ import { openExternal } from '../../utils/openExternal.js';
 const isWide = () => window.matchMedia('(min-width: 769px)').matches;
 
 function Projects() {
-  useDocumentTitle('Proyectos');
+  useDocumentTitle(
+    'Proyectos',
+    'Proyectos de Agustín García: Click&Wash (sistema web para lavaderos), suite de pruebas automatizadas con Playwright y más.',
+  );
   const [openFirst] = useState(isWide);
   const { playSound } = useAudio();
 

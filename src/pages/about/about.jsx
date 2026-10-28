@@ -7,7 +7,10 @@ import { about } from '../../data/about';
 const FACT_ICONS = { location: MapPin, languages: Languages, target: Target };
 
 function About() {
-  useDocumentTitle('Sobre mí');
+  useDocumentTitle(
+    'Sobre mí',
+    'Técnico Superior en Desarrollo Web que se especializa en testing QA con la Carrera QA Manager de EducaciónIT. Formación, cursos y forma de trabajo de Agustín García.',
+  );
   return (
     <section className="page-section">
       <header className="page-header">

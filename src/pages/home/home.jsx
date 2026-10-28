@@ -8,6 +8,7 @@ import miCaricaturaPensamiento from '../../assets/images/miCaricaturaPensamiento
 import { useAudio } from '../../context/useAudio.js';
 import { openExternal } from '../../utils/openExternal.js';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { projects } from '../../data/projects';
 import { contact, shortUrl } from '../../data/contact';
 import { LinkedinIcon } from '../../components/BrandIcons/BrandIcons.jsx';
@@ -63,6 +64,9 @@ function Home() {
   useDocumentTitle('');
   const { playSound } = useAudio();
   const navigate = useNavigate();
+  // Los mismos puntos de corte que home.css: cada tamaño de pantalla muestra una sola caricatura
+  const isWide = useMediaQuery('(min-width: 769px)');
+  const isMid = useMediaQuery('(min-width: 769px) and (max-width: 930px)');
 
   // Navega sin recargar la página, así se conserva el estado (sonido, tema)
   const goTo = (e, path) => {
@@ -159,56 +163,56 @@ function Home() {
 
       {/* Columna Derecha: Elemento Visual */}
       <div className="hero-visual">
-        {/* Más de 768px: caricatura sentada dentro del círculo */}
-        <div className="image-placeholder">
-          <img src={miCaricatura} alt="Caricatura 3D de Agustín" />
-        </div>
+        {/* Más de 768px: caricatura sentada dentro del círculo (es la imagen principal: se pide enseguida) */}
+        {isWide && (
+          <div className="image-placeholder">
+            <img src={miCaricatura} alt="Caricatura 3D de Agustín" fetchPriority="high" />
+          </div>
+        )}
 
         {/* Entre 930px y 769px: la caricatura "aguanta" el borde derecho de la pantalla */}
-        <img
-          className="hero-push"
-          src={miCaricaturaEmpujando}
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-        />
+        {isMid && (
+          <img className="hero-push" src={miCaricaturaEmpujando} alt="" aria-hidden="true" loading="lazy" />
+        )}
 
         {/* 768px o menos: la caricatura pensando, con los cuatro enlaces dentro de los globos.
             Los globos vienen dibujados en la imagen (vacíos); los textos son enlaces reales encima. */}
-        <div className="hero-thinking">
-          <img
-            src={miCaricaturaPensamiento}
-            alt="Caricatura de Agustín sentado, pensando"
-            width="1080"
-            height="720"
-            loading="lazy"
-          />
-          {BUBBLES.map(({ id, pos, label, href, internal, primary, tip }) => (
-            <a
-              key={id}
-              href={href}
-              className={`bubble bubble--${pos}${primary ? ' bubble--primary' : ''}`}
-              aria-describedby={`tip-${id}`}
-              {...(internal ? {} : { target: href.startsWith('http') ? '_blank' : undefined, rel: 'noreferrer' })}
-              onClick={
-                internal
-                  ? (e) => goTo(e, href)
-                  : (e) => {
-                      playSound(pickSound);
-                      openExternal(e);
-                    }
-              }
-            >
-              {label}
-              {/* Tooltip: aparece con el mouse o el teclado. Está oculto para lectores
-                  de pantalla porque ya se anuncia con aria-describedby. */}
-              <span id={`tip-${id}`} className="bubble__tip" role="tooltip" aria-hidden="true">
-                <strong>{tip.title}</strong>
-                {tip.text}
-              </span>
-            </a>
-          ))}
-        </div>
+        {!isWide && (
+          <div className="hero-thinking">
+            <img
+              src={miCaricaturaPensamiento}
+              alt="Caricatura de Agustín sentado, pensando"
+              width="1080"
+              height="720"
+              fetchPriority="high"
+            />
+            {BUBBLES.map(({ id, pos, label, href, internal, primary, tip }) => (
+              <a
+                key={id}
+                href={href}
+                className={`bubble bubble--${pos}${primary ? ' bubble--primary' : ''}`}
+                aria-describedby={`tip-${id}`}
+                {...(internal ? {} : { target: href.startsWith('http') ? '_blank' : undefined, rel: 'noreferrer' })}
+                onClick={
+                  internal
+                    ? (e) => goTo(e, href)
+                    : (e) => {
+                        playSound(pickSound);
+                        openExternal(e);
+                      }
+                }
+              >
+                {label}
+                {/* Tooltip: aparece con el mouse o el teclado. Está oculto para lectores
+                    de pantalla porque ya se anuncia con aria-describedby. */}
+                <span id={`tip-${id}`} className="bubble__tip" role="tooltip" aria-hidden="true">
+                  <strong>{tip.title}</strong>
+                  {tip.text}
+                </span>
+              </a>
+            ))}
+          </div>
+        )}
       </div>
 
     </section>

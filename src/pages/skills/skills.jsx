@@ -8,7 +8,10 @@ import { skillGroups } from '../../data/skills';
 const ICONS = { qa: FlaskConical, auto: Zap, dev: Code2, tools: Wrench };
 
 function Skills() {
-  useDocumentTitle('Habilidades');
+  useDocumentTitle(
+    'Habilidades',
+    'Habilidades de Agustín García, QA Tester Junior: testing manual, automatización con Playwright, desarrollo web y herramientas.',
+  );
   const [activeId, setActiveId] = useState(skillGroups[0].id);
   const tabRefs = useRef({});
   const active = skillGroups.find((g) => g.id === activeId) ?? skillGroups[0];
