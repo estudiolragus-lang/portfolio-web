@@ -9,12 +9,15 @@ function App() {
   return (
     <div className="app-container">
       <ScrollToTop />
+      <a href="#contenido" className="skip-link">
+        Saltar al contenido
+      </a>
       {/* El Navbar queda fijo arriba para todas las páginas */}
       <BackgroundHills />
       <Navbar />
       
       {/* El main es el contenedor principal donde cambia el contenido */}
-      <main className="main-content">
+      <main className="main-content" id="contenido" tabIndex={-1}>
         <div className="page-content">
           <Outlet />
         </div>

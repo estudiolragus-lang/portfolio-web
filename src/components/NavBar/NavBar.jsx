@@ -85,7 +85,7 @@ function NavBar() {
   );
 
   return (
-    <nav className="navbar" ref={navRef}>
+    <nav className="navbar" ref={navRef} aria-label="Principal">
       <div className="navbar-container">
 
         {/* Logo */}

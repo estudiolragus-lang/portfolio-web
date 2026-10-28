@@ -108,6 +108,11 @@
   transition: all var(--transition-speed) ease;
 }
 
+.menu-toggle {
+  min-width: 44px;
+  min-height: 44px;
+}
+
 .icon-btn:hover {
   color: var(--accent-color);
   background-color: var(--hover-bg);

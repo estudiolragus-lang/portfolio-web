@@ -89,7 +89,7 @@
 }
 
 .footer .logo__sub {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .footer-links {
@@ -103,7 +103,10 @@
 }
 
 .footer-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 44px;
   padding: 8px 0;
   color: var(--text-btn-secondary);
   font-size: 14px;

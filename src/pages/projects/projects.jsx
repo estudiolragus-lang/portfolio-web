@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ExternalLink, Clock, ChevronDown } from 'lucide-react';
 import './projects.css';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
@@ -6,8 +7,12 @@ import pickSound from '../../assets/sounds/pick.mp3';
 import { useAudio } from '../../context/useAudio.js';
 import { openExternal } from '../../utils/openExternal.js';
 
+// En pantallas anchas el primer proyecto arranca abierto; en celular, todos cerrados para que no sea tan largo
+const isWide = () => window.matchMedia('(min-width: 769px)').matches;
+
 function Projects() {
   useDocumentTitle('Proyectos');
+  const [openFirst] = useState(isWide);
   const { playSound } = useAudio();
 
   return (
@@ -46,7 +51,7 @@ function Projects() {
               ))}
             </ul>
 
-            <details className="project-details" open={index === 0}>
+            <details className="project-details" open={index === 0 && openFirst}>
               <summary className="project-details__summary">
                 <span>
                   Mi rol <span className="project-details__count">({project.did.length})</span>
