@@ -564,3 +564,12 @@
     transition: none;
   }
 }
+
+.contact-chip--cv .contact-chip__icon {
+  background: var(--hover-bg);
+  color: var(--accent-color);
+}
+
+.contact-chip--cv:hover {
+  border-color: var(--accent-color);
+}

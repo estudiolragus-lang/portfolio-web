@@ -49,18 +49,22 @@ function About() {
       <h2 className="about-heading">Formación</h2>
       <div className="about-grid about-grid--even">
         <article className="about-card">
-          <div className="about-item">
-            <span className="about-fact__icon">
-              <GraduationCap size={18} aria-hidden="true" />
-            </span>
-            <div>
-              <h3 className="about-item__title">{about.education.title}</h3>
-              <p className="about-item__meta">
-                {about.education.place} · {about.education.period}
-              </p>
-              <span className="project-badge">{about.education.status}</span>
-            </div>
-          </div>
+          <ul className="about-courses">
+            {about.education.map((item) => (
+              <li key={item.title} className="about-item">
+                <span className="about-fact__icon">
+                  <GraduationCap size={18} aria-hidden="true" />
+                </span>
+                <div>
+                  <h3 className="about-item__title">{item.title}</h3>
+                  <p className="about-item__meta">
+                    {item.place} · {item.period}
+                  </p>
+                  <span className="project-badge">{item.status}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
         </article>
 
         <article className="about-card">

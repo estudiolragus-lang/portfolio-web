@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowUpRight, ArrowRight, Mail } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Mail, FileDown } from 'lucide-react';
 import './home.css';
 import pickSound from '../../assets/sounds/pick.mp3';
 import miCaricatura from '../../assets/images/miCaricatura.webp';
@@ -84,7 +84,7 @@ function Home() {
         </h1>
 
         <p className="hero-subheadline">
-          Técnico Superior en Desarrollo Web y Aplicaciones Digitales. Busco mi primera oportunidad como <strong>QA Tester</strong>: hago testing manual y automatizo pruebas de punta a punta con <strong>Playwright</strong>. Mi base en <strong>JavaScript, React y SQL</strong> me permite entender lo que pruebo.
+          Técnico Superior en Desarrollo Web y Aplicaciones Digitales, hoy especializándome en testing QA. Busco mi primera oportunidad como <strong>QA Tester</strong>: hago testing manual y automatizo pruebas de punta a punta con <strong>Playwright</strong>. Mi base en <strong>JavaScript, React y SQL</strong> me permite entender lo que pruebo.
         </p>
 
         <div className="hero-ctas">
@@ -138,6 +138,20 @@ function Home() {
             <span className="contact-chip__text">
               <span className="contact-chip__title">Email</span>
               <span className="contact-chip__sub">{contact.email}</span>
+            </span>
+          </a>
+          <a
+            href={contact.cv}
+            download
+            className="contact-chip contact-chip--cv"
+            onClick={() => playSound(pickSound)}
+          >
+            <span className="contact-chip__icon">
+              <FileDown size={18} aria-hidden="true" />
+            </span>
+            <span className="contact-chip__text">
+              <span className="contact-chip__title">Currículum</span>
+              <span className="contact-chip__sub">Descargar PDF</span>
             </span>
           </a>
         </div>

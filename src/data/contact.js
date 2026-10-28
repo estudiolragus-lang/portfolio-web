@@ -5,6 +5,8 @@ export const contact = {
   phoneHref: 'tel:+543516184200',
   linkedin: 'https://www.linkedin.com/in/agustin-garcia-2a7478328/',
   github: 'https://github.com/estudiolragus-lang',
+  // PDF del currículum (vive en /public)
+  cv: '/CV-Agustin-Garcia.pdf',
 
   // Endpoint del formulario (ej: 'https://formspree.io/f/xxxxxxxx').
   // Mientras esté vacío, el formulario abre el correo del visitante con el mensaje ya armado.

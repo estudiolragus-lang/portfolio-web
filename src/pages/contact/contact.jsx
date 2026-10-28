@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Send, Mail, Phone, ArrowUpRight, Laptop, Building2, MapPin } from 'lucide-react';
+import { Send, Mail, Phone, ArrowUpRight, Laptop, Building2, MapPin, FileDown } from 'lucide-react';
 import '../projects/projects.css';
 import './contact.css';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
@@ -16,6 +16,7 @@ const CHANNELS = [
   { id: 'linkedin', label: 'LinkedIn', value: shortUrl(contact.linkedin), href: contact.linkedin, Icon: LinkedinIcon, external: true },
   { id: 'github', label: 'GitHub', value: shortUrl(contact.github), href: contact.github, Icon: GithubIcon, external: true },
   { id: 'phone', label: 'Teléfono', value: contact.phone, href: contact.phoneHref, Icon: Phone, external: false },
+  { id: 'cv', label: 'Currículum', value: 'Descargar PDF', href: contact.cv, Icon: FileDown, external: false, download: true },
 ];
 
 const EMPTY_FORM = { name: '', email: '', message: '', _gotcha: '' };
@@ -189,12 +190,13 @@ function Contact() {
 
         {/* Otros canales */}
         <aside className="contact-channels" aria-label="Otros medios de contacto">
-          {CHANNELS.map(({ id, label, value, href, Icon, external }) => (
+          {CHANNELS.map(({ id, label, value, href, Icon, external, download }) => (
             <a
               key={id}
               href={href}
               className="channel"
               {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
+              {...(download ? { download: true } : {})}
               onClick={(e) => {
                 playSound(pickSound);
                 openExternal(e);
