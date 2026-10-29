@@ -8,8 +8,27 @@ import pickSound from '../../assets/sounds/pick.mp3';
 import { useAudio } from '../../context/useAudio.js';
 import { openExternal } from '../../utils/openExternal.js';
 
-// En pantallas anchas el primer proyecto arranca abierto; en celular, todos cerrados para que no sea tan largo
+// En pantallas anchas el "Mi rol" del primer proyecto arranca abierto; en celular, todos cerrados para que no sea tan largo
 const isWide = () => window.matchMedia('(min-width: 769px)').matches;
+
+// Un desplegable con una lista (por ejemplo, "Mi rol" o "Qué va a tener")
+function Desplegable({ titulo, items, abierto = false }) {
+  return (
+    <details className="project-details" open={abierto}>
+      <summary className="project-details__summary">
+        <span>
+          {titulo} <span className="project-details__count">({items.length})</span>
+        </span>
+        <ChevronDown size={18} className="project-details__chevron" aria-hidden="true" />
+      </summary>
+      <ul className="project-row__list">
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </details>
+  );
+}
 
 function Projects() {
   useDocumentTitle(
@@ -35,86 +54,89 @@ function Projects() {
         </p>
       </header>
 
-      <div className="projects-grid">
-        {projects.map((project, index) => (
-          <article key={project.id} className="project-card">
-            <div className="project-card__top">
-              <span className="project-badge">{project.category}</span>
-              {project.withAI && <span className="project-badge project-badge--ai">Con ayuda de IA</span>}
-              <span className="project-status">{project.status}</span>
-            </div>
+      <div className="projects-list">
+        {projects.map((project, index) => {
+          const titleId = `proyecto-${project.id}`;
+          const isIdea = project.state === 'planning';
 
-            <h2 className="project-card__title">{project.title}</h2>
-            <p className="project-card__summary">{project.summary}</p>
-
-            {project.stackLabel && <p className="project-card__caption">{project.stackLabel}</p>}
-            <ul className="tag-list project-card__stack" aria-label={project.stackLabel ?? 'Tecnologías utilizadas'}>
-              {project.stack.map((tech) => (
-                <li key={tech} className="tag">
-                  {tech}
-                </li>
-              ))}
-            </ul>
-
-            {project.shots && <ProjectShots shots={project.shots} title={project.title} footnote="Datos de ejemplo" />}
-
-            <details className="project-details" open={index === 0 && openFirst}>
-              <summary className="project-details__summary">
-                <span>
-                  Mi rol <span className="project-details__count">({project.did.length})</span>
+          return (
+            <article
+              key={project.id}
+              className={`project-row${isIdea ? ' project-row--idea' : ''}`}
+              aria-labelledby={titleId}
+            >
+              <div className="project-row__rail">
+                <span className={`project-status project-status--${project.state}`}>
+                  <span className="project-status__dot" aria-hidden="true" />
+                  {project.status}
                 </span>
-                <ChevronDown size={18} className="project-details__chevron" aria-hidden="true" />
-              </summary>
-              <ul className="project-card__list">
-                {project.did.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </details>
+                <span className="project-row__category">{project.category}</span>
+              </div>
 
-            {project.plan && (
-              <details className="project-details">
-                <summary className="project-details__summary">
-                  <span>
-                    Qué va a tener <span className="project-details__count">({project.plan.length})</span>
-                  </span>
-                  <ChevronDown size={18} className="project-details__chevron" aria-hidden="true" />
-                </summary>
-                <ul className="project-card__list">
-                  {project.plan.map((item) => (
-                    <li key={item}>{item}</li>
+              <div className="project-row__main">
+                <h2 id={titleId} className="project-row__title">
+                  {project.title}
+                </h2>
+                <p className="project-row__summary">{project.summary}</p>
+
+                {project.stackLabel && <p className="project-row__caption">{project.stackLabel}</p>}
+                <ul className="tag-list" aria-label={project.stackLabel ?? 'Tecnologías utilizadas'}>
+                  {project.stack.map((tech) => (
+                    <li key={tech} className="tag">
+                      {tech}
+                    </li>
                   ))}
                 </ul>
-              </details>
-            )}
 
-            <div className="project-card__actions">
-              {project.links.map((link) =>
-                link.url ? (
-                  <a
-                    key={link.label}
-                    href={link.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn btn-primary"
-                    onClick={(e) => {
-                      playSound(pickSound);
-                      openExternal(e);
-                    }}
-                  >
-                    {link.label}
-                    <ExternalLink size={16} aria-hidden="true" />
-                  </a>
-                ) : (
-                  <span key={link.label} className="btn-disabled">
-                    <Clock size={16} aria-hidden="true" />
-                    {link.note ?? 'Próximamente'}
-                  </span>
-                ),
-              )}
-            </div>
-          </article>
-        ))}
+                <div className="project-more">
+                  <Desplegable titulo="Mi rol" items={project.did} abierto={index === 0 && openFirst} />
+                  {project.plan && <Desplegable titulo="Qué va a tener" items={project.plan} />}
+                </div>
+              </div>
+
+              <div className="project-row__evidence">
+                <ul className="project-facts" aria-label="Datos clave">
+                  {project.facts.map((fact) => (
+                    <li key={fact}>{fact}</li>
+                  ))}
+                </ul>
+
+                {project.shots && (
+                  <div className="project-row__shots">
+                    <ProjectShots shots={project.shots} title={project.title} footnote="Datos de ejemplo" />
+                    <p className="project-row__caption">Capturas con datos de ejemplo</p>
+                  </div>
+                )}
+
+                <div className="project-row__actions">
+                  {project.links.map((link) =>
+                    link.url ? (
+                      <a
+                        key={link.label}
+                        href={link.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn btn-primary"
+                        onClick={(e) => {
+                          playSound(pickSound);
+                          openExternal(e);
+                        }}
+                      >
+                        {link.label}
+                        <ExternalLink size={16} aria-hidden="true" />
+                      </a>
+                    ) : (
+                      <span key={link.label} className="btn-disabled">
+                        <Clock size={16} aria-hidden="true" />
+                        {link.note ?? 'Próximamente'}
+                      </span>
+                    ),
+                  )}
+                </div>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

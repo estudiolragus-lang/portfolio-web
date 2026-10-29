@@ -10,7 +10,9 @@ import gananciaFull from '../assets/images/clickwash/ganancia-full.webp';
 import inventarioThumb from '../assets/images/clickwash/inventario-thumb.webp';
 import inventarioFull from '../assets/images/clickwash/inventario-full.webp';
 
-// `withAI`: indica que el proyecto se hizo con mucha ayuda de inteligencia artificial.
+// `state`: 'done' (terminado), 'published' (publicado) o 'planning' (idea en planificación). Define el color del
+// punto de estado y, en una idea, el borde punteado de la fila.
+// `facts`: los datos clave que se ven al costado de cada proyecto (números y hechos, nunca promesas).
 // Para una idea que todavía no está construida: `plan` lista lo que va a tener (se muestra como "Qué va a tener")
 // y `stackLabel` aclara que las tecnologías son previstas.
 export const projects = [
@@ -19,7 +21,7 @@ export const projects = [
     category: 'Desarrollo',
     status: 'Terminado',
     title: 'Click&Wash',
-    withAI: true,
+    state: 'done',
     summary:
       'Plataforma para lavaderos de autos (SaaS multi-empresa): turnos, clientes, equipo, inventario, caja y finanzas, con un mapa público para que los conductores encuentren dónde lavar y reserven.',
     did: [
@@ -30,6 +32,7 @@ export const projects = [
       'Cuenta con más de 200 pruebas automatizadas de API y recorridos de punta a punta con Playwright, generadas con IA y revisadas por mí.',
     ],
     stack: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Playwright'],
+    facts: ['Más de 200 pruebas', 'Publicado en línea'],
     // Capturas con datos de ejemplo (negocio de demostración, sin clientes reales)
     shots: [
       {
@@ -73,7 +76,7 @@ export const projects = [
     category: 'QA Automation',
     status: 'Publicado',
     title: 'Pruebas Automatizadas con Playwright',
-    withAI: true,
+    state: 'published',
     summary:
       'Suite de pruebas end-to-end sobre una tienda online de práctica: 28 casos de prueba, 5 bugs reportados y ejecución automática en GitHub Actions.',
     did: [
@@ -83,6 +86,7 @@ export const projects = [
       'Configuré GitHub Actions para correr toda la suite automáticamente.',
     ],
     stack: ['Playwright', 'JavaScript', 'Page Object Model', 'GitHub Actions'],
+    facts: ['28 casos de prueba', '5 bugs reportados', 'Se ejecuta sola en GitHub Actions'],
     links: [
       { label: 'Ver repositorio', url: 'https://github.com/estudiolragus-lang/playwright-qa-automation' },
     ],
@@ -92,7 +96,7 @@ export const projects = [
     category: 'Desarrollo',
     status: 'En planificación',
     title: 'Tareita',
-    withAI: true,
+    state: 'planning',
     summary:
       'Idea de una aplicación web para equipos de estudio y de trabajo: cada persona tiene una caricatura en pixel art que cambia según cuántas tareas del día completó, y el equipo ve el avance de todos en una sala compartida. Todavía no hay código: hoy el producto está pensado y documentado.',
     did: [
@@ -115,6 +119,7 @@ export const projects = [
       'Plan gratuito de hasta 10 integrantes y planes pagos con Mercado Pago más adelante.',
     ],
     stack: ['React', 'Vite', 'Node.js', 'Express', 'PostgreSQL', 'Playwright', 'Render'],
+    facts: ['28 pantallas mapeadas', '12 ventanas emergentes', 'Plan técnico y modelo de datos'],
     stackLabel: 'Tecnologías previstas',
     links: [{ label: 'Ver proyecto', url: null, note: 'Todavía es una idea' }],
   },
