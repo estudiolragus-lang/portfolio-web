@@ -66,7 +66,7 @@ function NavBar() {
 
   const renderLinks = (className) => (
     <ul className={className}>
-      {NAV_ITEMS.map(({ to, label }) => (
+      {NAV_ITEMS.map(({ to, label, icon: Icon }) => (
         <li key={to}>
           <NavLink
             to={to}
@@ -77,6 +77,7 @@ function NavBar() {
             }}
             className={({ isActive }) => (isActive ? 'nav-item active' : 'nav-item')}
           >
+            <Icon size={20} className="nav-item__icon" aria-hidden="true" />
             {label}
           </NavLink>
         </li>

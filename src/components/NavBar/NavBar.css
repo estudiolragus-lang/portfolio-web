@@ -126,6 +126,11 @@
   display: none;
 }
 
+/* Los iconos de los links solo se ven en el menú desplegable del celular */
+.nav-item__icon {
+  display: none;
+}
+
 /* --- Pantallas de hasta 930px: las acciones pasan al menú hamburguesa --- */
 @media (max-width: 930px) {
   .menu-toggle {
@@ -256,10 +261,17 @@
   }
 
   .navbar-links--mobile .nav-item {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     padding: 12px;
     border-radius: 8px;
     font-size: 15px;
+  }
+
+  .navbar-links--mobile .nav-item__icon {
+    display: block;
+    flex: none;
   }
 
   .navbar-links--mobile .nav-item:hover {
