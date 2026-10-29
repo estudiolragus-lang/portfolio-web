@@ -25,11 +25,11 @@ function Projects() {
         <span className="page-eyebrow">Proyectos</span>
         <h1 className="page-title">Lo que construí y probé</h1>
         <p className="page-lead">
-          Tres proyectos donde aplico desarrollo y calidad: dos sistemas web y una suite de pruebas
-          automatizadas.
+          Dos proyectos terminados donde aplico desarrollo y calidad (un sistema web y una suite de pruebas
+          automatizadas) y una idea en planificación.
         </p>
         <p className="page-note">
-          <strong>Cómo trabajo:</strong> estos proyectos los desarrollé con mucha ayuda de inteligencia
+          <strong>Cómo trabajo:</strong> los proyectos terminados los desarrollé con mucha ayuda de inteligencia
           artificial. Yo defino qué hay que construir, reviso, pruebo y decido; la IA escribe buena parte del
           código. Mis conocimientos de QA y desarrollo me permiten dirigirla y detectar lo que está mal.
         </p>
@@ -47,7 +47,8 @@ function Projects() {
             <h2 className="project-card__title">{project.title}</h2>
             <p className="project-card__summary">{project.summary}</p>
 
-            <ul className="tag-list project-card__stack" aria-label="Tecnologías utilizadas">
+            {project.stackLabel && <p className="project-card__caption">{project.stackLabel}</p>}
+            <ul className="tag-list project-card__stack" aria-label={project.stackLabel ?? 'Tecnologías utilizadas'}>
               {project.stack.map((tech) => (
                 <li key={tech} className="tag">
                   {tech}
@@ -70,6 +71,22 @@ function Projects() {
                 ))}
               </ul>
             </details>
+
+            {project.plan && (
+              <details className="project-details">
+                <summary className="project-details__summary">
+                  <span>
+                    Qué va a tener <span className="project-details__count">({project.plan.length})</span>
+                  </span>
+                  <ChevronDown size={18} className="project-details__chevron" aria-hidden="true" />
+                </summary>
+                <ul className="project-card__list">
+                  {project.plan.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </details>
+            )}
 
             <div className="project-card__actions">
               {project.links.map((link) =>

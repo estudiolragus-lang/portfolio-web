@@ -203,6 +203,14 @@
   margin-bottom: 20px;
 }
 
+/* Aclara cuando las tecnologías todavía son un plan */
+.project-card__caption {
+  margin: 0 0 8px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+}
+
 /* "Mi rol" desplegable: la tarjeta se ve corta y el detalle está a un toque */
 .project-details {
   margin: 0 -28px;

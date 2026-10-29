@@ -11,6 +11,8 @@ import inventarioThumb from '../assets/images/clickwash/inventario-thumb.webp';
 import inventarioFull from '../assets/images/clickwash/inventario-full.webp';
 
 // `withAI`: indica que el proyecto se hizo con mucha ayuda de inteligencia artificial.
+// Para una idea que todavía no está construida: `plan` lista lo que va a tener (se muestra como "Qué va a tener")
+// y `stackLabel` aclara que las tecnologías son previstas.
 export const projects = [
   {
     id: 'click-and-wash',
@@ -67,22 +69,6 @@ export const projects = [
     links: [{ label: 'Ver proyecto', url: 'https://clickwash.onrender.com/' }],
   },
   {
-    id: 'plataforma-educativa',
-    category: 'Desarrollo',
-    status: 'En desarrollo',
-    title: 'Plataforma Educativa',
-    withAI: true,
-    summary:
-      'Plataforma web para gestionar contenidos y usuarios de un entorno de aprendizaje.',
-    did: [
-      'Diseñé la estructura de la aplicación y sus pantallas principales.',
-      'Implementé el frontend y la comunicación con el backend, con ayuda de IA.',
-      'Validé formularios y casos límite para detectar fallos antes de entregar.',
-    ],
-    stack: ['JavaScript', 'React', 'C#', 'ASP.NET'],
-    links: [{ label: 'Ver proyecto', url: null }],
-  },
-  {
     id: 'automatizacion-playwright',
     category: 'QA Automation',
     status: 'Publicado',
@@ -100,5 +86,36 @@ export const projects = [
     links: [
       { label: 'Ver repositorio', url: 'https://github.com/estudiolragus-lang/playwright-qa-automation' },
     ],
+  },
+  {
+    id: 'tareita',
+    category: 'Desarrollo',
+    status: 'En planificación',
+    title: 'Tareita',
+    withAI: true,
+    summary:
+      'Idea de una aplicación web para equipos de estudio y de trabajo: cada persona tiene una caricatura en pixel art que cambia según cuántas tareas del día completó, y el equipo ve el avance de todos en una sala compartida. Todavía no hay código: hoy el producto está pensado y documentado.',
+    did: [
+      'Pensé el producto y definí sus reglas en decenas de decisiones: roles y permisos, planes con jornadas y recreos, tareas compartidas, reglas para menores de edad y un límite gratuito de 10 integrantes.',
+      'Mapeé 28 pantallas y 12 ventanas emergentes, con lo que debe llevar cada una.',
+      'Armé el modelo de datos, el plan técnico y una estrategia de pruebas con las reglas que habría que verificar.',
+      'Calculé los costos del servidor con los precios oficiales de Render y un punto de equilibrio para los planes.',
+      'Preparé borradores de los textos legales (para revisar con un profesional) y una lista de preguntas para el contador.',
+      'Trabajé la documentación con IA (Claude): yo decidía y respondía, la IA redactaba y ordenaba.',
+    ],
+    // Lo que todavía es un plan: se muestra aparte de "Mi rol", que cuenta solo lo hecho.
+    plan: [
+      'Una sala por día donde se ve a todo el equipo, con la caricatura de cada persona y cuántas tareas completó.',
+      'Caricaturas en pixel art con 6 estados que cambian según el avance, y un creador de personajes por piezas.',
+      'Plan por día, semana o mes, con una o varias jornadas por día y recreos del equipo o personales.',
+      'Tareas compartidas, reprogramación de las que no se hicieron y cálculo del tiempo disponible por tarea.',
+      'Chat del día (solo mayores de 18), anotaciones y resumen de horas planificadas contra realizadas.',
+      'Roles de dueño e integrante con permisos, reportes y un panel de administración.',
+      'Pensada para sentirse fluida: la sala se actualiza sola cada 30 a 60 segundos al principio y pasa a tiempo real después, y se mide con una prueba de carga antes de abrirla al público.',
+      'Plan gratuito de hasta 10 integrantes y planes pagos con Mercado Pago más adelante.',
+    ],
+    stack: ['React', 'Vite', 'Node.js', 'Express', 'PostgreSQL', 'Playwright', 'Render'],
+    stackLabel: 'Tecnologías previstas',
+    links: [{ label: 'Ver proyecto', url: null, note: 'Todavía es una idea' }],
   },
 ];
