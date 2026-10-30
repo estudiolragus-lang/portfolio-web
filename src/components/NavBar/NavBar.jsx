@@ -20,6 +20,19 @@ export default function NavBar() {
   const { soundEnabled, toggleSound, playSound } = useAudio();
 
   useEffect(() => {
+    let wasScrolled;
+    const updateSurface = () => {
+      const scrolled = window.scrollY > 12;
+      if (scrolled === wasScrolled) return;
+      navRef.current?.classList.toggle('is-scrolled', scrolled);
+      wasScrolled = scrolled;
+    };
+    updateSurface();
+    window.addEventListener('scroll', updateSurface, { passive: true });
+    return () => window.removeEventListener('scroll', updateSurface);
+  }, []);
+
+  useEffect(() => {
     if (!menuOpen) return;
     const close = (e) => {
       if (e.key === 'Escape') { setOpenOn(null); toggleRef.current?.focus(); }

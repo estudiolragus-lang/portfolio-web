@@ -1,41 +1,61 @@
-.navbar-logo a {
-  text-decoration: none;
-}
-
 .logo {
   display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  line-height: 1;
+  align-items: center;
+  gap: 12px;
   user-select: none;
 }
 
-.logo__name {
-  color: var(--text-primary);
-  font-family: 'Playfair Display', 'Bodoni MT', Georgia, serif;
-  font-size: 40px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  transition: color 0.3s ease;
+.logo__mark {
+  display: block;
+  width: 46px;
+  height: 46px;
+  flex: none;
+  border: 1px solid var(--image-border);
+  border-radius: 13px;
+  background: var(--image-bg);
 }
+
+.logo__letter { stroke: var(--accent-color); }
+.logo__check { stroke: var(--brand-pink); }
+
+.logo__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
+}
+
+.logo__name {
+  display: block;
+  color: var(--text-primary);
+  font-family: 'Poppins', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -1.2px;
+  white-space: nowrap;
+}
+
+.logo__initial { color: var(--accent-color); }
+.logo__dot { color: var(--brand-pink); }
 
 .logo__sub {
+  display: block;
   color: var(--text-secondary);
   font-family: 'Poppins', sans-serif;
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.4px;
-  margin-top: -3px;
-  padding-left: 30%;
-  transition: color 0.3s ease;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
-a:hover .logo__name,
-a:focus-visible .logo__name {
-  color: var(--accent-color);
-}
+a:hover .logo__mark { border-color: var(--accent-color); }
 
 @media (max-width: 768px) {
-  .logo__name { font-size: 32px; }
-  .logo__sub { font-size: 10px; }
+  .logo { gap: 10px; }
+  .logo__mark { width: 40px; height: 40px; border-radius: 11px; }
+  .logo__name { font-size: 23px; }
+  .logo__sub { font-size: 8px; letter-spacing: .9px; }
 }

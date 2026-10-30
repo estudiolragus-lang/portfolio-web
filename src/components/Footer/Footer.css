@@ -89,7 +89,7 @@
 }
 
 .footer .logo__sub {
-  font-size: 12px;
+  font-size: 9px;
 }
 
 .footer-links {
@@ -241,14 +241,14 @@
 
   /* En celular el logo es el protagonista del pie: más grande que en escritorio */
   .footer .logo__name {
-    font-size: 44px;
+    font-size: 30px;
   }
 
   .footer .logo__sub {
-    font-size: 13px;
-    /* Con la letra más grande, la cola de la "g" llegaba a pisar este texto */
-    margin-top: 3px;
+    font-size: 9px;
   }
+
+  .footer .logo__mark { width: 48px; height: 48px; }
 
   .footer-social {
     gap: 12px;
