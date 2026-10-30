@@ -1,145 +1,82 @@
-import { useState } from 'react';
-import { ExternalLink, Clock, ChevronDown } from 'lucide-react';
-import './projects.css';
+import { useRef } from 'react';
+import { ExternalLink, ChevronDown, Target, ClipboardCheck, FlaskConical, Lightbulb } from 'lucide-react';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { projects } from '../../data/projects';
-import ProjectShots from '../../components/ProjectShots/ProjectShots.jsx';
+import ProjectShots from '../../components/ProjectShots/ProjectShots';
+import Reveal from '../../components/Reveal/Reveal';
+import NextStep from '../../components/NextStep/NextStep';
+import { useAudio } from '../../context/useAudio';
 import pickSound from '../../assets/sounds/pick.mp3';
-import { useAudio } from '../../context/useAudio.js';
-import { openExternal } from '../../utils/openExternal.js';
+import './projects.css';
 
-// En pantallas anchas el "Mi rol" del primer proyecto arranca abierto; en celular, todos cerrados para que no sea tan largo
-const isWide = () => window.matchMedia('(min-width: 769px)').matches;
-
-// Un desplegable con una lista (por ejemplo, "Mi rol" o "Qué va a tener")
-function Desplegable({ titulo, items, abierto = false }) {
-  return (
-    <details className="project-details" open={abierto}>
-      <summary className="project-details__summary">
-        <span>
-          {titulo} <span className="project-details__count">({items.length})</span>
-        </span>
-        <ChevronDown size={18} className="project-details__chevron" aria-hidden="true" />
-      </summary>
-      <ul className="project-row__list">
-        {items.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
-    </details>
-  );
-}
-
-function Projects() {
-  useDocumentTitle(
-    'Proyectos',
-    'Proyectos de Agustín García: Click&Wash (sistema web para lavaderos), suite de pruebas automatizadas con Playwright y más.',
-  );
-  const [openFirst] = useState(isWide);
+function ProjectCase({ project }) {
   const { playSound } = useAudio();
-
-  return (
-    <section className="page-section">
-      <header className="page-header">
-        <span className="page-eyebrow">Proyectos</span>
-        <h1 className="page-title">Lo que construí y probé</h1>
-        <p className="page-lead">
-          Dos proyectos terminados donde aplico desarrollo y calidad (un sistema web y una suite de pruebas
-          automatizadas) y una idea en planificación.
-        </p>
-        <p className="page-note">
-          <strong>Cómo trabajo:</strong> los proyectos terminados los desarrollé con mucha ayuda de inteligencia
-          artificial. Yo defino qué hay que construir, reviso, pruebo y decido; la IA escribe buena parte del
-          código. Mis conocimientos de QA y desarrollo me permiten dirigirla y detectar lo que está mal.
-        </p>
-      </header>
-
-      <div className="projects-list">
-        {projects.map((project, index) => {
-          const titleId = `proyecto-${project.id}`;
-          const isIdea = project.state === 'planning';
-
-          return (
-            <article
-              key={project.id}
-              className={`project-row${isIdea ? ' project-row--idea' : ''}`}
-              aria-labelledby={titleId}
-            >
-              <div className="project-row__rail">
-                <span className={`project-status project-status--${project.state}`}>
-                  <span className="project-status__dot" aria-hidden="true" />
-                  {project.status}
-                </span>
-                <span className="project-row__category">{project.category}</span>
-              </div>
-
-              <div className="project-row__main">
-                <h2 id={titleId} className="project-row__title">
-                  {project.title}
-                </h2>
-                <p className="project-row__summary">{project.summary}</p>
-
-                {project.stackLabel && <p className="project-row__caption">{project.stackLabel}</p>}
-                <ul className="tag-list" aria-label={project.stackLabel ?? 'Tecnologías utilizadas'}>
-                  {project.stack.map((tech) => (
-                    <li key={tech} className="tag">
-                      {tech}
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="project-more">
-                  <Desplegable titulo="Mi rol" items={project.did} abierto={index === 0 && openFirst} />
-                  {project.plan && <Desplegable titulo="Qué va a tener" items={project.plan} />}
-                </div>
-              </div>
-
-              <div className="project-row__evidence">
-                <ul className="project-facts" aria-label="Datos clave">
-                  {project.facts.map((fact) => (
-                    <li key={fact}>{fact}</li>
-                  ))}
-                </ul>
-
-                {project.shots && (
-                  <div className="project-row__shots">
-                    <ProjectShots shots={project.shots} title={project.title} footnote="Datos de ejemplo" />
-                    <p className="project-row__caption">Capturas con datos de ejemplo</p>
-                  </div>
-                )}
-
-                <div className="project-row__actions">
-                  {project.links.map((link) =>
-                    link.url ? (
-                      <a
-                        key={link.label}
-                        href={link.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="btn btn-primary"
-                        onClick={(e) => {
-                          playSound(pickSound);
-                          openExternal(e);
-                        }}
-                      >
-                        {link.label}
-                        <ExternalLink size={16} aria-hidden="true" />
-                      </a>
-                    ) : (
-                      <span key={link.label} className="btn-disabled">
-                        <Clock size={16} aria-hidden="true" />
-                        {link.note ?? 'Próximamente'}
-                      </span>
-                    ),
-                  )}
-                </div>
-              </div>
-            </article>
-          );
-        })}
+  const frame = useRef(null);
+  const planning = project.state === 'planning';
+  const titleId = project.id + '-title';
+  const glow = e => {
+    if (e.pointerType !== 'mouse' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const element = e.currentTarget;
+    const rect = element.getBoundingClientRect();
+    element.style.setProperty('--pointer-x', (e.clientX - rect.left) + 'px');
+    element.style.setProperty('--pointer-y', (e.clientY - rect.top) + 'px');
+  };
+  return <Reveal as="article" id={project.id} tabIndex={-1} className={'project-case interactive-surface' + (planning ? ' project-case--planning' : '')} aria-labelledby={titleId} onPointerMove={glow}>
+    <div className="project-case__intro">
+      <div className="project-case__labels">
+        <span className={'project-status project-status--' + project.state}><span className="project-status__dot" aria-hidden="true" />{project.status}</span>
+        <span className="project-badge">{project.category === 'Desarrollo' && !planning ? 'Desarrollo + QA' : project.category}</span>
       </div>
-    </section>
-  );
+      <h2 id={titleId}>{project.title}</h2>
+      <p className="project-case__summary">{project.preview}</p>
+      <dl className="case-story">
+        <div><dt><Target size={18} aria-hidden="true" />El problema</dt><dd>{project.problem}</dd></div>
+        <div><dt><ClipboardCheck size={18} aria-hidden="true" />Mi aporte</dt><dd>{project.contribution}</dd></div>
+        <div><dt>{planning ? <Lightbulb size={18} aria-hidden="true" /> : <FlaskConical size={18} aria-hidden="true" />}{planning ? 'Lo documentado' : 'La evidencia'}</dt><dd>{project.facts.join(' · ')}</dd></div>
+      </dl>
+      {project.stackLabel && <p className="project-case__caption">{project.stackLabel}</p>}
+      <ul className="tag-list" aria-label={project.stackLabel ?? 'Tecnologías utilizadas'}>{project.stack.map(tech => <li key={tech} className="tag">{tech}</li>)}</ul>
+      <div className="project-case__actions">
+        {project.links.map(link => link.url ? <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary" onClick={() => playSound(pickSound)}>{link.label}<ExternalLink size={16} aria-hidden="true" /></a>
+          : <span key={link.label} className="project-case__caption">{link.note}</span>)}
+        <a href={'#proceso-' + project.id} className="text-link" onClick={() => {
+          // Se abre antes de que el ancla desplace y enfoque el contenido.
+          if (frame.current) frame.current.open = true;
+        }}>Explorar mi proceso<ChevronDown size={16} aria-hidden="true" /></a>
+      </div>
+    </div>
+    <div className="project-case__visual">
+      {project.shots ? <ProjectShots shots={project.shots} title={project.title} footnote="Datos de ejemplo" featured /> :
+        <div className={'project-evidence' + (planning ? ' project-evidence--planning' : '')}>
+          {planning ? <Lightbulb size={36} aria-hidden="true" /> : <FlaskConical size={36} aria-hidden="true" />}
+          <p className="project-evidence__label">{planning ? 'Primero, pensar el producto.' : 'De probar a documentar.'}</p>
+          <ul>{project.facts.map(fact => <li key={fact}>{fact}</li>)}</ul>
+          <p className="project-case__caption">{planning ? 'Sin código publicado. Tecnologías y funcionalidades previstas.' : 'Suite sobre una tienda online de práctica. El código y la documentación están en el repositorio.'}</p>
+        </div>}
+    </div>
+    <details ref={frame} className="case-process" id={'proceso-' + project.id}>
+      <summary>Mi proceso y participación<ChevronDown size={18} aria-hidden="true" /></summary>
+      <div className="case-process__body">
+        <p>{project.summary}</p>
+        <h3>Mi rol</h3>
+        <ul>{project.did.map(item => <li key={item}>{item}</li>)}</ul>
+        {project.plan && <><h3>Qué va a tener</h3><ul>{project.plan.map(item => <li key={item}>{item}</li>)}</ul></>}
+      </div>
+    </details>
+  </Reveal>;
 }
 
-export default Projects;
+export default function Projects() {
+  useDocumentTitle();
+  const completed = projects.filter(p => p.state !== 'planning');
+  const planning = projects.filter(p => p.state === 'planning');
+  return <section className="page-section">
+    <header className="page-header">
+      <span className="page-eyebrow">Proyectos</span>
+      <h1 className="page-title">Lo que construí <span className="text-accent">y probé.</span></h1>
+      <p className="page-lead">Desarrollo, calidad y evidencia real. {completed.length} proyectos realizados y {planning.length} idea en planificación.</p>
+    </header>
+    <div className="projects-list">{projects.map(project => <ProjectCase project={project} key={project.id} />)}</div>
+    <NextStep to="/contact" label="Hablemos">¿Te interesa cómo puedo aportar a tu equipo?</NextStep>
+  </section>;
+}

@@ -5,7 +5,7 @@ import { LinkedinIcon, GithubIcon } from '../BrandIcons/BrandIcons.jsx';
 import './Footer.css';
 import pickSound from '../../assets/sounds/pick.mp3';
 import { useAudio } from '../../context/useAudio.js';
-import { openExternal } from '../../utils/openExternal.js';
+import { site } from '../../data/site';
 import { NAV_ITEMS } from '../../data/navItems';
 import { contact } from '../../data/contact';
 
@@ -25,6 +25,7 @@ function Footer() {
   const scrollToTop = () => {
     playSound(pickSound);
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelector('.navbar-logo')?.focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
   };
 
@@ -76,9 +77,8 @@ function Footer() {
                   aria-label={label}
                   title={label}
                   {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-                  onClick={(e) => {
+                  onClick={() => {
                     playSound(pickSound);
-                    openExternal(e);
                   }}
                 >
                   <Icon size={18} aria-hidden="true" />
@@ -90,7 +90,7 @@ function Footer() {
 
         <div className="footer-bottom">
           <p className="footer-bottom__copy">
-            © {new Date().getFullYear()} Agustín García · Hecho con React y Vite
+            © {new Date().getFullYear()} {site.name} · Hecho con React y Vite
           </p>
           <button type="button" className="footer-top" onClick={scrollToTop}>
             <ArrowUp size={14} aria-hidden="true" />

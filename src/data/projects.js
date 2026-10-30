@@ -22,6 +22,9 @@ export const projects = [
     status: 'Terminado',
     title: 'Click&Wash',
     state: 'done',
+    preview: 'Sistema para lavaderos: turnos, caja e inventario, con pruebas manuales y automatizadas.',
+    problem: 'Centralizar turnos, clientes, caja e inventario de un lavadero en un mismo sistema.',
+    contribution: 'Definición del producto, revisión y pruebas, con desarrollo asistido por IA.',
     summary:
       'Plataforma para lavaderos de autos (SaaS multi-empresa): turnos, clientes, equipo, inventario, caja y finanzas, con un mapa público para que los conductores encuentren dónde lavar y reserven.',
     did: [
@@ -77,6 +80,9 @@ export const projects = [
     status: 'Publicado',
     title: 'Pruebas Automatizadas con Playwright',
     state: 'published',
+    preview: '28 casos de prueba, 5 bugs reportados y ejecución en GitHub Actions sobre una tienda online de práctica.',
+    problem: 'Verificar los recorridos de login, catálogo, carrito y checkout de una tienda de práctica.',
+    contribution: 'Diseño de casos, automatización con ayuda de IA, revisión y documentación de bugs.',
     summary:
       'Suite de pruebas end-to-end sobre una tienda online de práctica: 28 casos de prueba, 5 bugs reportados y ejecución automática en GitHub Actions.',
     did: [
@@ -97,6 +103,9 @@ export const projects = [
     status: 'En planificación',
     title: 'Tareita',
     state: 'planning',
+    preview: 'Una aplicación para equipos con tareas y caricaturas. Por ahora, pensada y documentada.',
+    problem: 'Hacer visible el avance de las tareas diarias de un equipo de estudio o trabajo.',
+    contribution: 'Definición del producto, pantallas, modelo de datos y estrategia de pruebas, con ayuda de IA.',
     summary:
       'Idea de una aplicación web para equipos de estudio y de trabajo: cada persona tiene una caricatura en pixel art que cambia según cuántas tareas del día completó, y el equipo ve el avance de todos en una sala compartida. Todavía no hay código: hoy el producto está pensado y documentado.',
     did: [

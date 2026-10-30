@@ -1,132 +1,87 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { AudioContext as SoundContext } from './audioContextValue.js';
+import { AudioContext as SoundContext } from './audioContextValue';
 import clickSound from '../assets/sounds/click.mp3';
 import pickSound from '../assets/sounds/pick.mp3';
-import sonidoOffSound from '../assets/sounds/sonidoOff.mp3';
-import sonidoOnSound from '../assets/sounds/sonidoOn.mp3';
+import offSound from '../assets/sounds/sonidoOff.mp3';
+import onSound from '../assets/sounds/sonidoOn.mp3';
 
-// Sonidos de la interfaz: se descargan una sola vez, sin frenar la carga de la página.
-const SOUNDS = [clickSound, pickSound, sonidoOffSound, sonidoOnSound];
+const SOUNDS = [clickSound, pickSound, offSound, onSound];
+const STORAGE_KEY = 'portfolio-sound';
 
-// Eventos que "desbloquean" el audio (los navegadores de celular lo exigen)
-const UNLOCK_EVENTS = ['pointerdown', 'touchstart', 'keydown'];
+export function AudioProvider({ children }) {
+  const [soundEnabled, setSoundEnabled] = useState(() => {
+    try { return localStorage.getItem(STORAGE_KEY) === 'true'; } catch { return false; }
+  });
+  const context = useRef(null);
+  const downloads = useRef(new Map());
+  const decoded = useRef(new Map());
+  const fallbacks = useRef(new Map());
 
-/*
- * Antes cada clic creaba un `new Audio(...)`, que en el celular vuelve a pedir y
- * decodificar el archivo cada vez (de ahí la demora). Ahora:
- *   1. Los archivos se descargan cuando el navegador queda libre.
- *   2. En el primer toque se decodifican a memoria con Web Audio.
- *   3. Cada sonido se reproduce desde memoria, sin demora.
- * Si Web Audio no está listo todavía, se usa un <audio> ya precargado como respaldo.
- */
-export const AudioProvider = ({ children }) => {
-  const [soundEnabled, setSoundEnabled] = useState(true);
-
-  const contextRef = useRef(null);
-  const rawRef = useRef(new Map()); // src -> Promise<ArrayBuffer> (archivo descargado)
-  const buffersRef = useRef(new Map()); // src -> AudioBuffer (listo para sonar)
-  const elementsRef = useRef(new Map()); // src -> <audio> de respaldo
-  const decodedRef = useRef(false);
-
-  const getElement = useCallback((src) => {
-    let element = elementsRef.current.get(src);
-    if (!element) {
-      element = new Audio(src);
-      element.preload = 'none'; // el archivo ya se descarga aparte (ensureRaw); así no se pide dos veces
-      elementsRef.current.set(src, element);
+  const load = useCallback(src => {
+    if (!downloads.current.has(src)) {
+      const promise = fetch(src).then(response => {
+        if (!response.ok) throw new Error('Audio unavailable');
+        return response.arrayBuffer();
+      }).catch(() => { downloads.current.delete(src); return null; });
+      downloads.current.set(src, promise);
     }
-    return element;
+    return downloads.current.get(src);
   }, []);
 
-  // Descarga los archivos de sonido (una sola vez). Se pide también al primer toque si todavía no se hizo.
-  const ensureRaw = useCallback(() => {
-    SOUNDS.forEach((src) => {
-      if (!rawRef.current.has(src)) {
-        rawRef.current.set(
-          src,
-          fetch(src)
-            .then((response) => response.arrayBuffer())
-            .catch(() => null),
-        );
-      }
-    });
-  }, []);
-
-  // Se precargan cuando el navegador queda libre, para no competir con la imagen y el texto de la portada
   useEffect(() => {
-    const schedule = window.requestIdleCallback ?? ((callback) => setTimeout(callback, 1500));
-    const cancel = window.cancelIdleCallback ?? clearTimeout;
-    const handle = schedule(ensureRaw, { timeout: 4000 });
-    return () => cancel(handle);
-  }, [ensureRaw]);
+    try { localStorage.setItem(STORAGE_KEY, String(soundEnabled)); } catch { /* Preferencia en memoria si no hay almacenamiento. */ }
+    if (!soundEnabled) return;
+    const run = () => SOUNDS.forEach(load);
+    const id = window.requestIdleCallback ? window.requestIdleCallback(run, { timeout: 4000 }) : setTimeout(run, 1500);
+    return () => window.cancelIdleCallback ? window.cancelIdleCallback(id) : clearTimeout(id);
+  }, [soundEnabled, load]);
 
-  // Con el primer toque o tecla: se activa Web Audio y se decodifican los sonidos
   useEffect(() => {
-    const unlock = () => {
-      const Ctor = window.AudioContext || window.webkitAudioContext;
-      if (!Ctor) return;
-
-      if (!contextRef.current) {
-        contextRef.current = new Ctor({ latencyHint: 'interactive' });
-      }
-      const context = contextRef.current;
-      if (context.state !== 'running') context.resume().catch(() => {});
-
-      if (decodedRef.current) return;
-      decodedRef.current = true;
-
-      ensureRaw();
-      rawRef.current.forEach((promise, src) => {
-        promise.then((data) => {
-          if (!data) return;
-          // La versión con callbacks funciona también en Safari antiguos
-          context.decodeAudioData(
-            data.slice(0),
-            (buffer) => buffersRef.current.set(src, buffer),
-            () => {},
-          );
-        });
-      });
+    const elements = fallbacks.current;
+    const buffers = decoded.current;
+    return () => {
+      context.current?.close().catch(() => {});
+      context.current = null;
+      buffers.clear();
+      elements.forEach(element => { element.pause(); element.removeAttribute('src'); element.load(); });
+      elements.clear();
     };
+  }, []);
 
-    UNLOCK_EVENTS.forEach((name) => window.addEventListener(name, unlock, { passive: true }));
-    return () => UNLOCK_EVENTS.forEach((name) => window.removeEventListener(name, unlock));
-  }, [ensureRaw]);
-
-  const toggleSound = () => {
-    setSoundEnabled((prev) => !prev);
-  };
-
-  // `force` reproduce aunque el sonido esté silenciado (lo usa el propio botón de sonido)
-  const playSound = (audioSrc, volume = 0.4, force = false) => {
+  const playSound = (src, volume = .3, force = false) => {
     if (!soundEnabled && !force) return;
-
-    const context = contextRef.current;
-    const buffer = buffersRef.current.get(audioSrc);
-
-    if (context && context.state === 'running' && buffer) {
-      const source = context.createBufferSource();
-      const gain = context.createGain();
-      source.buffer = buffer;
-      gain.gain.value = volume;
-      source.connect(gain);
-      gain.connect(context.destination);
-      source.start(0);
-      return;
-    }
-
-    // Respaldo: <audio> ya precargado (solo se usa hasta que Web Audio esté listo)
-    const element = getElement(audioSrc);
-    element.volume = volume;
-    element.currentTime = 0;
-    element.play().catch((error) => {
-      console.log('Audio bloqueado o error al reproducir', error);
-    });
+    const fallback = () => {
+      let element = fallbacks.current.get(src);
+      if (!element) { element = new Audio(src); fallbacks.current.set(src, element); }
+      element.volume = volume;
+      element.currentTime = 0;
+      element.play().catch(() => {});
+    };
+    const Constructor = window.AudioContext || window.webkitAudioContext;
+    if (!Constructor) { fallback(); return; }
+    try {
+      context.current ??= new Constructor({ latencyHint: 'interactive' });
+      const audio = context.current;
+      const resumed = audio.state === 'running' ? Promise.resolve() : audio.resume();
+      if (!decoded.current.has(src)) {
+        decoded.current.set(src, load(src).then(raw => {
+          if (!raw) throw new Error('Audio unavailable');
+          return audio.decodeAudioData(raw.slice(0));
+        }).catch(() => { decoded.current.delete(src); return null; }));
+      }
+      Promise.all([resumed, decoded.current.get(src)]).then(([, buffer]) => {
+        if (!buffer || audio.state !== 'running') return;
+        const source = audio.createBufferSource();
+        const gain = audio.createGain();
+        source.buffer = buffer;
+        gain.gain.value = volume;
+        source.connect(gain);
+        gain.connect(audio.destination);
+        source.onended = () => { source.disconnect(); gain.disconnect(); };
+        source.start();
+      }).catch(fallback);
+    } catch { fallback(); }
   };
 
-  return (
-    <SoundContext.Provider value={{ soundEnabled, toggleSound, playSound }}>
-      {children}
-    </SoundContext.Provider>
-  );
-};
+  return <SoundContext.Provider value={{ soundEnabled, toggleSound: () => setSoundEnabled(value => !value), playSound }}>{children}</SoundContext.Provider>;
+}

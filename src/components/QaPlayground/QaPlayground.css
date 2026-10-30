@@ -1,0 +1,20 @@
+.qa-playground { margin-top: 64px; padding: 32px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; border: 1px solid var(--image-border); border-radius: var(--radius-card); background: var(--image-bg); }
+.qa-playground__intro > p { font-size: 14px; line-height: 1.8; color: var(--text-secondary); }
+.qa-demo-label { display: inline-block; font-size: 10px; line-height: 1.8; color: var(--text-secondary); padding-top: 8px; }
+.qa-experiment { min-width: 0; padding: 24px; background: var(--bg-nav); border: 1px solid var(--border-subtle); border-radius: 14px; }
+.qa-experiment__rule { font-size: 13px; line-height: 1.8; color: var(--text-secondary); margin: 0 0 20px; }
+.qa-experiment__rule strong { color: var(--text-primary); }
+.qa-experiment__form label { display: block; font-size: 12px; margin-bottom: 10px; }
+.qa-experiment__form > div { display: flex; gap: 10px; }
+.qa-experiment__form input { width: 100%; min-width: 0; padding: 12px; border: 1px solid var(--border-input); border-radius: 9px; background: var(--bg-input); color: var(--text-primary); }
+.qa-result { min-height: 3.6em; font-size: 12px; line-height: 1.8; color: var(--text-secondary); margin: 16px 0; }
+.qa-experiment__actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.qa-experiment__actions .text-link { border: 0; background: none; padding: 0; font: inherit; font-size: 12px; cursor: pointer; text-align: left; }
+.qa-reset { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border: 1px solid var(--border-subtle); border-radius: 9px; background: var(--hover-bg); color: var(--text-secondary); cursor: pointer; }
+.qa-report { margin-top: 16px; padding-top: 18px; border-top: 1px solid var(--border-subtle); }
+.qa-report h3 { font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
+.qa-report dl { display: grid; gap: 14px; margin: 0; font-size: 12px; line-height: 1.8; }
+.qa-report dt { font-weight: 600; }
+.qa-report dd { margin: 3px 0 0; color: var(--text-secondary); }
+@media (max-width: 860px) { .qa-playground { grid-template-columns: minmax(0, 1fr); padding: 24px; gap: 20px; } }
+@media (max-width: 400px) { .qa-playground { padding: 20px 16px; } .qa-experiment { padding: 18px; } .qa-experiment__form > div { flex-wrap: wrap; } .qa-experiment__form .btn { width: 100%; } }

@@ -1,145 +1,83 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Moon, Sun, Volume2, VolumeX, Menu, X } from 'lucide-react';
-import './NavBar.css';
-
-// Importaciones de tus assets
 import Logo from '../Logo/Logo.jsx';
-import clickSound from '../../assets/sounds/click.mp3';
-import pickSound from '../../assets/sounds/pick.mp3';
-import sonidoOffSound from '../../assets/sounds/sonidoOff.mp3';
-import sonidoOnSound from '../../assets/sounds/sonidoOn.mp3';
-
-// 1. Importamos el hook global
 import { useAudio } from '../../context/useAudio.js';
 import { useTheme } from '../../context/ThemeContext';
 import { NAV_ITEMS } from '../../data/navItems';
+import pickSound from '../../assets/sounds/pick.mp3';
+import clickSound from '../../assets/sounds/click.mp3';
+import sonidoOn from '../../assets/sounds/sonidoOn.mp3';
+import './NavBar.css';
 
-function NavBar() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const navRef = useRef(null);
+export default function NavBar() {
   const { pathname } = useLocation();
-  // Nombre de la página actual (se muestra en pantallas muy angostas)
-  const currentPage = NAV_ITEMS.find((item) => item.to === pathname)?.label;
+  const [openOn, setOpenOn] = useState(null);
+  const menuOpen = openOn === pathname;
+  const navRef = useRef(null);
+  const toggleRef = useRef(null);
+  const { isDarkMode, toggleTheme } = useTheme();
+  const { soundEnabled, toggleSound, playSound } = useAudio();
 
-  // Cierra el menú con Escape o al hacer clic fuera de la barra
   useEffect(() => {
     if (!menuOpen) return;
-    const onKeyDown = (e) => e.key === 'Escape' && setMenuOpen(false);
-    const onPointerDown = (e) => {
-      if (navRef.current && !navRef.current.contains(e.target)) setMenuOpen(false);
+    const close = (e) => {
+      if (e.key === 'Escape') { setOpenOn(null); toggleRef.current?.focus(); }
     };
-    document.addEventListener('keydown', onKeyDown);
-    document.addEventListener('pointerdown', onPointerDown);
+    const outside = (e) => {
+      if (!navRef.current?.contains(e.target)) setOpenOn(null);
+    };
+    const focusOut = (e) => {
+      if (!navRef.current?.contains(e.target)) setOpenOn(null);
+    };
+    const desktop = window.matchMedia('(min-width: 981px)');
+    const resized = (e) => { if (e.matches) setOpenOn(null); };
+    document.addEventListener('keydown', close);
+    document.addEventListener('pointerdown', outside);
+    document.addEventListener('focusin', focusOut);
+    desktop.addEventListener('change', resized);
     return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', close);
+      document.removeEventListener('pointerdown', outside);
+      document.removeEventListener('focusin', focusOut);
+      desktop.removeEventListener('change', resized);
     };
   }, [menuOpen]);
 
-  // 2. Extraemos el estado global y las funciones del contexto
-  const { isDarkMode, toggleTheme: switchTheme } = useTheme();
-  const { soundEnabled, toggleSound, playSound: playGlobalSound } = useAudio();
+  const links = (mobile = false) => <ul className={mobile ? 'navbar-links navbar-links--mobile' : 'navbar-links'}>
+    {NAV_ITEMS.map(({ to, label, icon: Icon }) => <li key={to}>
+      <NavLink to={to} end={to === '/'} className={({ isActive }) => 'nav-item' + (isActive ? ' active' : '')}
+        onClick={() => { playSound(pickSound); setOpenOn(null); }}>
+        {mobile && <Icon size={18} aria-hidden="true" />}{label}
+      </NavLink>
+    </li>)}
+  </ul>;
 
-  // Función local para adaptar tus sonidos del navbar al contexto global
-  const playNavSound = (soundFile) => {
-    playGlobalSound(soundFile); // Si soundEnabled es false, esto no sonará en ningún lado
-  };
+  const actions = () => <>
+    <button type="button" className="icon-btn" aria-label={soundEnabled ? 'Silenciar sonido' : 'Activar sonido'} aria-pressed={soundEnabled}
+      onClick={() => { if (!soundEnabled) playSound(sonidoOn, .25, true); toggleSound(); }}>
+      {soundEnabled ? <Volume2 size={19} aria-hidden="true" /> : <VolumeX size={19} aria-hidden="true" />}
+      <span className="icon-btn__label">{soundEnabled ? 'Silenciar sonido' : 'Activar sonido'}</span>
+    </button>
+    <button type="button" className="icon-btn" aria-label={isDarkMode ? 'Activar modo claro' : 'Activar modo oscuro'} aria-pressed={!isDarkMode}
+      onClick={() => { playSound(clickSound); toggleTheme(); }}>
+      {isDarkMode ? <Sun size={19} aria-hidden="true" /> : <Moon size={19} aria-hidden="true" />}
+      <span className="icon-btn__label">{isDarkMode ? 'Modo claro' : 'Modo oscuro'}</span>
+    </button>
+  </>;
 
-  const handleSoundToggle = () => {
-    // Suena el efecto del estado al que se pasa. `true` fuerza el sonido aunque esté silenciado.
-    playGlobalSound(soundEnabled ? sonidoOffSound : sonidoOnSound, 0.4, true);
-
-    // Cambiamos el estado globalmente para toda la app
-    toggleSound();
-  };
-
-  const toggleMenu = () => {
-    playNavSound(clickSound);
-    setMenuOpen((prev) => !prev);
-  };
-
-  const toggleTheme = () => {
-    playNavSound(clickSound);
-    switchTheme();
-  };
-
-  const renderLinks = (className) => (
-    <ul className={className}>
-      {NAV_ITEMS.map(({ to, label, icon: Icon }) => (
-        <li key={to}>
-          <NavLink
-            to={to}
-            end={to === '/'}
-            onClick={() => {
-              playNavSound(pickSound);
-              setMenuOpen(false);
-            }}
-            className={({ isActive }) => (isActive ? 'nav-item active' : 'nav-item')}
-          >
-            <Icon size={20} className="nav-item__icon" aria-hidden="true" />
-            {label}
-          </NavLink>
-        </li>
-      ))}
-    </ul>
-  );
-
-  return (
-    <nav className="navbar" ref={navRef} aria-label="Principal">
-      <div className="navbar-container">
-
-        {/* Logo */}
-        <div className="navbar-logo">
-          <NavLink to="/" onClick={() => playNavSound(pickSound)}>
-            <Logo />
-          </NavLink>
-        </div>
-
-        {/* Página actual: solo se ve en pantallas muy angostas, donde no hay logo ni links */}
-        {currentPage && (
-          <span className="navbar-page" aria-hidden="true">
-            {currentPage}
-          </span>
-        )}
-
-        {/* Navegación principal (en pantallas muy angostas pasa al menú hamburguesa) */}
-        {renderLinks('navbar-links')}
-
-        {/* Botón hamburguesa (solo visible en pantallas angostas) */}
-        <button
-          type="button"
-          className="icon-btn menu-toggle"
-          onClick={toggleMenu}
-          aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
-          aria-expanded={menuOpen}
-          aria-controls="navbar-actions"
-        >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-
-        {/* Menú desplegable: links (solo en pantallas muy angostas) y acciones secundarias */}
-        <div id="navbar-actions" className={menuOpen ? 'navbar-actions is-open' : 'navbar-actions'}>
-          <div className="navbar-links-mobile">
-            {renderLinks('navbar-links navbar-links--mobile')}
-          </div>
-
-          {/* Botón de Altavoz conectado al estado global */}
-          <button onClick={handleSoundToggle} className="icon-btn" title={!soundEnabled ? "Activar sonido" : "Silenciar sonido"}>
-            {!soundEnabled ? <VolumeX size={20} /> : <Volume2 size={20} />}
-            <span className="icon-btn__label">{!soundEnabled ? 'Activar sonido' : 'Silenciar sonido'}</span>
-          </button>
-
-          <div className="divider"></div>
-
-          <button onClick={toggleTheme} className="icon-btn theme-toggle" title={isDarkMode ? "Modo día" : "Modo noche"}>
-            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-            <span className="icon-btn__label">{isDarkMode ? 'Modo día' : 'Modo noche'}</span>
-          </button>
-        </div>
-      </div>
-    </nav>
-  );
+  return <nav ref={navRef} className="navbar" aria-label="Principal">
+    <div className="navbar-container">
+      <NavLink to="/" className="navbar-logo" aria-label="Agustín García, inicio" onClick={() => setOpenOn(null)}><Logo /></NavLink>
+      <div className="navbar-desktop">{links()}</div>
+      <div className="navbar-desktop navbar-actions">{actions()}</div>
+      <button ref={toggleRef} type="button" className="icon-btn menu-toggle" aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={menuOpen} aria-controls="mobile-navigation"
+        onClick={() => setOpenOn(menuOpen ? null : pathname)}>
+        {menuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
+      </button>
+    </div>
+    <div id="mobile-navigation" className="mobile-navigation" hidden={!menuOpen}>
+      {links(true)}<div className="mobile-preferences">{actions()}</div>
+    </div>
+  </nav>;
 }
-
-export default NavBar;

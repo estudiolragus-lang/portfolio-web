@@ -1,15 +1,14 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { ScrollRestoration, useLocation } from 'react-router-dom';
 
-// Al cambiar de página, vuelve al inicio en vez de conservar el scroll anterior.
-function ScrollToTop() {
-  const { pathname } = useLocation();
-
+export default function ScrollToTop() {
+  const location = useLocation();
+  const previous = useRef(location.key);
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  return null;
+    if (previous.current === location.key) return;
+    previous.current = location.key;
+    const target = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : document.getElementById('contenido');
+    target?.focus({ preventScroll: true });
+  }, [location]);
+  return <ScrollRestoration />;
 }
-
-export default ScrollToTop;

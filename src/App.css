@@ -1,37 +1,7 @@
-.app-container {
-  position: relative;
-  overflow-x: hidden;
-}
-
-.main-content {
-  position: relative;
-}
-
-/* El contenido va por encima del fondo decorativo */
-.page-content {
-  position: relative;
-  z-index: 1;
-}
-
-/* Enlace para saltar al contenido: solo aparece al navegar con el teclado */
-.skip-link {
-  position: absolute;
-  top: -48px;
-  left: 12px;
-  z-index: 200;
-  padding: 10px 16px;
-  border-radius: 8px;
-  background: var(--accent-color);
-  color: var(--accent-contrast);
-  font-weight: 600;
-  text-decoration: none;
-  transition: top 0.15s ease;
-}
-
-.skip-link:focus {
-  top: 12px;
-}
-
-.main-content:focus {
-  outline: none;
-}
+.app-container { position: relative; overflow-x: clip; min-height: 100dvh; }
+.main-content, .page-content { position: relative; }
+.page-content { z-index: 1; min-height: 55vh; }
+.skip-link { position: fixed; top: 12px; left: 12px; z-index: 2000; padding: 12px 18px; border-radius: 10px; background: var(--cta-bg); color: var(--cta-text); font-weight: 600; text-decoration: none; transform: translateY(-160%); }
+.skip-link:focus { transform: none; }
+.main-content:focus { outline: none; }
+.route-loading { position: fixed; top: calc(var(--nav-height) + 8px); right: 5%; z-index: 1001; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--image-border); background: var(--bg-nav); color: var(--text-primary); font-size: 12px; }

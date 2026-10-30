@@ -1,0 +1,7 @@
+.character-guide { display: flex; align-items: center; gap: 16px; margin-top: 28px; }
+.character-guide > img { width: clamp(90px, 14vw, 145px); height: auto; flex: none; }
+.character-guide > div { min-width: 0; }
+.guide-prompt { display: inline-flex; align-items: center; gap: 10px; text-align: left; padding: 12px 16px; min-height: 48px; border: 1px solid var(--image-border); border-radius: 14px 14px 14px 2px; background: var(--bg-nav); color: var(--text-primary); cursor: pointer; font-size: 14px; }
+.guide-prompt:hover { border-color: var(--accent-color); }
+.guide-answer { max-width: 460px; padding: 8px 0 0; }
+.guide-answer p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; margin: 8px 0 0; }

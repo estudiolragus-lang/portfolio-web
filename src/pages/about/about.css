@@ -1,140 +1,35 @@
-/* Los estilos base (.page-section, .tag, .project-badge) viven en projects/projects.css */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 24px;
-  align-items: start;
-}
-
-.about-grid--even {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.about-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px;
-  padding: 28px;
-}
-
-.about-bio p {
-  color: var(--text-secondary);
-  font-size: 16px;
-  line-height: 1.75;
-  margin: 0 0 16px;
-}
-
-.about-bio p:first-child {
-  color: var(--text-primary);
-  font-size: 17px;
-}
-
-.about-bio p:last-child {
-  margin-bottom: 0;
-}
-
-/* --- Datos rápidos --- */
-.about-facts__list,
-.about-courses {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.about-fact,
-.about-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-}
-
-.about-fact__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: var(--hover-bg);
-  color: var(--accent-color);
-  flex-shrink: 0;
-}
-
-.about-fact__text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.about-fact__label {
-  color: var(--text-secondary);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.about-fact__value {
-  color: var(--text-primary);
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-/* --- Formación --- */
-.about-heading {
-  color: var(--text-primary);
-  font-size: 24px;
-  margin: 56px 0 20px;
-}
-
-.about-item__title {
-  color: var(--text-primary);
-  font-size: 16px;
-  line-height: 1.4;
-  margin: 0 0 4px;
-}
-
-.about-item__meta {
-  color: var(--text-secondary);
-  font-size: 14px;
-  margin: 0 0 10px;
-}
-
-.about-courses .about-item__meta {
-  margin-bottom: 0;
-}
-
-.tag-list--lg .tag {
-  font-size: 14px;
-  padding: 8px 16px;
-}
-
-@media (max-width: 860px) {
-  .about-grid,
-  .about-grid--even {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-.about-highlights {
-  list-style: none;
-  margin: 12px 0 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.about-highlights .tag {
-  padding: 4px 10px;
-  font-size: 12.5px;
-}
-
-.about-courses + .shots {
-  margin-top: 18px;
-  margin-bottom: 0;
-}
+.about-introduction { display: grid; grid-template-columns: minmax(0, 1fr) 270px; align-items: center; gap: 40px; }
+.about-introduction .page-header { margin-bottom: 36px; }
+.about-introduction .text-link { margin-top: 18px; }
+.about-character { width: 100%; height: auto; align-self: start; }
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+.about-card { padding: 30px; background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); }
+.about-card__heading { font-size: 22px; line-height: 1.4; margin: 0 0 20px; letter-spacing: -.4px; }
+.about-bio p { font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin: 0 0 16px; }
+.about-bio p:last-child { margin: 0; }
+.about-facts__list { display: grid; gap: 24px; list-style: none; padding: 0; margin: 0; }
+.about-fact { display: flex; align-items: flex-start; gap: 14px; }
+.about-fact__icon { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: var(--hover-bg); color: var(--accent-color); flex: none; }
+.about-fact__label { display: block; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 5px; }
+.about-fact__value { font-size: 13px; line-height: 1.7; display: block; }
+.about-journey { margin-top: 64px; }
+.journey-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 48px; align-items: start; margin-top: 28px; }
+.timeline { list-style: none; padding: 0 0 0 24px; margin: 0 0 0 20px; border-left: 1px solid var(--image-border); display: grid; gap: 20px; }
+.timeline-item { position: relative; display: flex; align-items: flex-start; gap: 18px; padding: 24px; border: 1px solid var(--border-subtle); border-radius: 16px; background: var(--card-bg); }
+.timeline-item::before { content: ''; position: absolute; left: -30px; top: 34px; width: 9px; height: 9px; background: var(--accent-color); border-radius: 50%; box-shadow: 0 0 0 5px var(--bg-primary); }
+.timeline-item--next::before { background: var(--brand-pink); }
+.timeline-item--next .project-badge { color: var(--brand-pink); }
+.timeline-icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 11px; background: var(--image-bg); color: var(--accent-color); flex: none; }
+.timeline-content { min-width: 0; }
+.timeline-content h3 { font-size: 16px; line-height: 1.5; margin: 12px 0 8px; }
+.timeline-content p { color: var(--text-secondary); font-size: 13px; margin: 3px 0; line-height: 1.7; }
+.timeline-content .timeline-period { font-size: 11px; }
+.timeline-content .tag-list { margin-top: 16px; gap: 6px; }
+.timeline-content .tag { font-size: 10px; }
+.about-certificates { padding: 26px; background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); }
+.about-certificates h3 { font-size: 19px; margin: 0 0 12px; }
+.about-certificates > p { font-size: 12px; line-height: 1.8; color: var(--text-secondary); margin: 0 0 20px; }
+.about-working { margin-top: 64px; }
+.about-working .tag-list { margin-top: 24px; }
+@media (max-width: 860px) { .about-grid, .journey-grid { grid-template-columns: minmax(0, 1fr); } .about-introduction { grid-template-columns: minmax(0, 1fr) 180px; gap: 12px; } }
+@media (max-width: 600px) { .about-introduction { position: relative; display: block; } .about-character { width: 120px; float: right; margin: -24px 0 16px 8px; } .about-introduction .page-header { margin-bottom: 0; } .about-grid { clear: both; padding-top: 24px; } .about-card { padding: 24px; } .timeline { margin-left: 6px; padding-left: 20px; } .timeline-item { padding: 18px; gap: 12px; } .timeline-item::before { left: -26px; } .timeline-icon { width: 32px; height: 32px; } }

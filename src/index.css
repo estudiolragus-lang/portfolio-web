@@ -73,7 +73,7 @@
   --hill-back: #b6d1ee;
   --hill-mid: #cddff3;
   --hill-front: var(--bg-primary);
-  --cta-bg: #0284c7;
+  --cta-bg: #0369a1;
   --cta-text: #ffffff;
   --cta-sub: rgba(255, 255, 255, 0.88);
   --cta-tile: rgba(255, 255, 255, 0.2);
@@ -105,4 +105,20 @@ body {
 a,
 button {
   touch-action: manipulation;
+}
+
+:root { --nav-height: 80px; --space-unit: 8px; --radius-card: 20px; --success-color: #4ade80; --error-color: #fda4af; }
+[data-theme='light'] { --success-color: #166534; --error-color: #b91c1c; }
+* { box-sizing: border-box; }
+html { scroll-padding-top: calc(var(--nav-height) + 24px); }
+body { overflow-wrap: break-word; }
+button, input, textarea { font: inherit; }
+button, a, input, textarea, summary, [tabindex] { -webkit-tap-highlight-color: transparent; }
+:where(a, button, input, textarea, summary, [tabindex]):focus-visible { outline: 3px solid var(--accent-color); outline-offset: 4px; }
+button:disabled { cursor: progress; }
+img { max-width: 100%; }
+[id] { scroll-margin-top: calc(var(--nav-height) + 24px); }
+::selection { background: var(--accent-color); color: var(--accent-contrast); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
